@@ -1,14 +1,14 @@
-package com.impulse.afterdarrk;
+package com.impulse.afterdarrk.Enemy;
 
-import android.content.Context;
 import android.media.Image;
-import android.view.MotionEvent;
-import android.view.View;
+
+import com.impulse.afterdarrk.Actions.ActionType;
+import com.impulse.afterdarrk.Player;
 
 import java.util.ArrayList;
 import java.util.List;
 
-class BlackAngel extends Enemy{
+public class BlackAngel extends Enemy {
     static int speed = 1;
 
     List<ActionType> actionTypeList = new ArrayList<ActionType>() {{ ///why not just new list instead of arraylist

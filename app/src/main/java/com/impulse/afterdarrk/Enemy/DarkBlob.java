@@ -1,13 +1,14 @@
-package com.impulse.afterdarrk;
+package com.impulse.afterdarrk.Enemy;
 
-import android.content.Context;
 import android.media.Image;
 
-import java.lang.reflect.Field;
+import com.impulse.afterdarrk.Actions.ActionType;
+import com.impulse.afterdarrk.Player;
+
 import java.util.ArrayList;
 import java.util.List;
 
-class DarkBlob extends Enemy{
+public class DarkBlob extends Enemy {
 
     static int speed = 1;
 

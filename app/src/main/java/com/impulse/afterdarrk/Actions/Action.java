@@ -1,8 +1,10 @@
-package com.impulse.afterdarrk;
+package com.impulse.afterdarrk.Actions;
 
 import android.media.Image;
 import android.view.MotionEvent;
 import android.view.View;
+
+import com.impulse.afterdarrk.Player;
 
 public abstract class Action implements View.OnTouchListener {
     private ActionType type;

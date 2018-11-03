@@ -2,9 +2,8 @@ package com.impulse.afterdarrk;
 
 import android.graphics.Canvas;
 
-class DisplayObj {
+abstract public class DisplayObj {
 
-    public void draw(Canvas canvas) {
+    abstract public void draw(Canvas canvas);
 
-    }
 }

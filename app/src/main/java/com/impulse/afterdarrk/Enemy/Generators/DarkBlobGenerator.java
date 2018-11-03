@@ -1,13 +1,19 @@
-package com.impulse.afterdarrk;
+package com.impulse.afterdarrk.Enemy.Generators;
 
-import android.content.Context;
+import com.impulse.afterdarrk.Enemy.DarkBlob;
+import com.impulse.afterdarrk.Enemy.Enemy;
+import com.impulse.afterdarrk.Player;
 
 public class DarkBlobGenerator extends EnemyGenerator {
 
     public DarkBlobGenerator(Player player) {
         this.player = player;
         img = null;
-        prob = 0.01;
+    }
+
+    @Override
+    protected double getProb() {
+        return Math.log(enemies_generated + 2) * (5 - Enemy.NUM_ENEMIES) / 5;
     }
 
     @Override
@@ -17,8 +23,4 @@ public class DarkBlobGenerator extends EnemyGenerator {
         return enemy;
     }
 
-    @Override
-    protected void recalculateNextProb() {
-        prob += 0.01;
-    }
 }

@@ -25,7 +25,7 @@ public class Display extends View {
         super.draw(canvas);
         for (DisplayObj obj : objs) {
             obj.draw(canvas);
-        }
+        };
     }
 
 

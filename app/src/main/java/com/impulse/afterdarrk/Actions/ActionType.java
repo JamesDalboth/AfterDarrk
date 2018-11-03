@@ -1,4 +1,4 @@
-package com.impulse.afterdarrk;
+package com.impulse.afterdarrk.Actions;
 
 public enum ActionType {
     FIRE,
