@@ -3,13 +3,13 @@ package com.impulse.afterdarrk;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Rect;
 import android.media.Image;
+import android.view.MotionEvent;
+import android.view.View;
 
 import com.impulse.afterdarrk.Actions.ActionType;
 import com.impulse.afterdarrk.Enemy.Enemy;
-
-import static com.impulse.afterdarrk.Enemy.Enemy.RADIUS;
+import com.impulse.afterdarrk.Utils.CartesianCoords;
 
 public class Player extends DisplayObj {
     private Enemy target;
@@ -52,11 +52,19 @@ public class Player extends DisplayObj {
         if (target == null) {
             return;
         }
-        paint.setColor(Color.YELLOW);
-        canvas.drawRect(new Rect(target.getPosition().x - (RADIUS/2),
-                                 target.getPosition().y - (RADIUS/2),
-                                      RADIUS,
-                                      RADIUS),
-                        paint);
+    }
+
+    @Override
+    public boolean isHit(CartesianCoords pos) {
+        return false;
+    }
+
+    @Override
+    public void touch(View view, MotionEvent event) {
+
+    }
+
+    public Enemy getEnemy() {
+        return target;
     }
 }

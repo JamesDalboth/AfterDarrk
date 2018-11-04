@@ -88,6 +88,7 @@ public class Main extends AppCompatActivity {
             Enemy enemy = iterator.next();
             if (enemy.isDead()) {
                 iterator.remove();
+                display.remove(enemy);
                 continue;
             }
             enemy.update();
