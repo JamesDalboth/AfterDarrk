@@ -1,5 +1,6 @@
 package com.impulse.afterdarrk.Actions;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ActionList {
@@ -24,4 +25,13 @@ public class ActionList {
         return (actionPos == actions.size());
     }
 
+    public List<ActionType> remaining() {
+        List<ActionType> remaining = new ArrayList<>();
+
+        for (int i = actionPos; i < actions.size(); i++) {
+            remaining.add(actions.get(i));
+        }
+
+        return remaining;
+    }
 }
