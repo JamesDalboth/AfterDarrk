@@ -5,10 +5,14 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 
+import com.impulse.afterdarrk.Actions.Action;
+import com.impulse.afterdarrk.Actions.ActionButton;
+import com.impulse.afterdarrk.Actions.ActionType;
 import com.impulse.afterdarrk.Enemy.Enemy;
 import com.impulse.afterdarrk.Enemy.Generators.BlackAngelGenerator;
 import com.impulse.afterdarrk.Enemy.Generators.DarkBlobGenerator;
 import com.impulse.afterdarrk.Enemy.Generators.ShadowHandGenerator;
+import com.impulse.afterdarrk.Utils.CartesianCoords;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -54,9 +58,17 @@ public class Main extends AppCompatActivity {
         // Init enemy list
         enemyList = new ArrayList<>();
 
-        // Init dislay obj
+        ActionButton fireButton = new ActionButton(player, new CartesianCoords(100, height - ActionButton.WIDTH - 50), ActionType.FIRE);
+        ActionButton iceButton = new ActionButton(player, new CartesianCoords(200 + ActionButton.WIDTH, height - ActionButton.WIDTH - 50), ActionType.ICE);
+        ActionButton lightningButton = new ActionButton(player, new CartesianCoords(300 + ActionButton.WIDTH * 2, height - ActionButton.WIDTH - 50), ActionType.LIGHTNING);
+
+        // Init display obj
         display = new Display(this);
         display.addObj(player);
+        display.addObj(fireButton);
+        display.addObj(iceButton);
+        display.addObj(lightningButton);
+
         setContentView(display);
 
         // Init enemy generators

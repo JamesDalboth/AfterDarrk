@@ -105,17 +105,27 @@ public abstract class Enemy extends DisplayObj {
     private void drawActions(Canvas canvas) {
         Paint paint = new Paint();
 
-        paint.setColor(Color.BLACK);
-
         List<ActionType> remaining = actions.remaining();
 
-        double width = remaining.size() * ACTION_WIDTH + (remaining.size() - 1) * ACTION_WIDTH/2;
+        double width = remaining.size() * ACTION_WIDTH + (remaining.size () - 1) * ACTION_WIDTH/2;
 
         double left = getPosition().getX() - width/2;
 
         int rectTop = (int) Math.floor(getPosition().getY()) - RADIUS - ACTION_WIDTH * 2;
 
         for (int i = 0; i < remaining.size(); i++) {
+            switch (remaining.get(i)) {
+                case FIRE:
+                    paint.setColor(Color.RED);
+                    break;
+                case ICE:
+                    paint.setColor(Color.BLUE);
+                    break;
+                case LIGHTNING:
+                    paint.setColor(Color.BLACK);
+                    break;
+            }
+
             int rectLeft = (int) Math.round(left + (i * ACTION_WIDTH * 3/2));
 
             Rect actionRect = new Rect(rectLeft, rectTop, rectLeft + ACTION_WIDTH, rectTop + ACTION_WIDTH);
