@@ -24,22 +24,22 @@ public abstract class Enemy extends DisplayObj {
 
     //Number of enemies spawned in at the moment
     public static int NUM_ENEMIES = 0;
-    // Radius of enemy to draw
-    public static int RADIUS = 100;
-    public static int ACTION_WIDTH = 50;
+
+    private static int ACTION_WIDTH = 50;
 
     protected Player player;
     private EnemyType type;
     private Image img;
     private ActionList actions;
     private boolean dead;
+    private final int radius;
 
     private int speed;
     private PolarCoords polar;
 
 
     public Enemy(EnemyType type, Image img, int speed, Player player,
-                 double angle, ActionList actions) {
+                 double angle, ActionList actions, int size) {
         NUM_ENEMIES++;
 
         this.type = type;
@@ -51,6 +51,8 @@ public abstract class Enemy extends DisplayObj {
         this.speed = speed;
         this.player = player;
         this.polar = new PolarCoords(INIT_DISTANCE, angle);
+
+        this.radius = size;
     }
 
     public boolean attack(ActionType type) {
@@ -97,7 +99,7 @@ public abstract class Enemy extends DisplayObj {
         }
 
         canvas.drawCircle(Math.round(getPosition().getX()),
-                                     Math.round(getPosition().getY() - (RADIUS/2)), RADIUS, paint);
+                                     Math.round(getPosition().getY() - (radius /2)), radius, paint);
 
         drawActions(canvas);
     }
@@ -111,7 +113,7 @@ public abstract class Enemy extends DisplayObj {
 
         double left = getPosition().getX() - width/2;
 
-        int rectTop = (int) Math.floor(getPosition().getY()) - RADIUS - ACTION_WIDTH * 2;
+        int rectTop = (int) Math.floor(getPosition().getY()) - radius - ACTION_WIDTH * 2;
 
         for (int i = 0; i < remaining.size(); i++) {
             switch (remaining.get(i)) {
@@ -139,6 +141,6 @@ public abstract class Enemy extends DisplayObj {
 
     @Override
     public boolean isHit(CartesianCoords pos) {
-        return (pos.subOff(getPosition()).toPolar().getRadius() < RADIUS);
+        return (pos.subOff(getPosition()).toPolar().getRadius() < radius);
     }
 }

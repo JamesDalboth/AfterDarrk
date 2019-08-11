@@ -11,12 +11,12 @@ import java.util.ArrayList;
 public class BlackAngel extends Enemy {
     static int speed = 1;
 
-    public BlackAngel(Image img, Player player, double angle) {
+    public BlackAngel(Image img, Player player, double angle, int size) {
         super(EnemyType.ANGEL, img, speed, player, angle, new ActionList(new ArrayList<ActionType>() {{
             add(ActionType.FIRE);
             add(ActionType.FIRE);
             add(ActionType.ICE);
             add(ActionType.ICE);
-        }}));
+        }}), size);
     }
 }

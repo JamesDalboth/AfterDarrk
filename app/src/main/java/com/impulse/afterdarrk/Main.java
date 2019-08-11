@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 
 import com.impulse.afterdarrk.Actions.Action;
+import com.impulse.afterdarrk.Actions.ActionBar;
 import com.impulse.afterdarrk.Actions.ActionButton;
 import com.impulse.afterdarrk.Actions.ActionType;
 import com.impulse.afterdarrk.Enemy.Enemy;
@@ -51,24 +52,21 @@ public class Main extends AppCompatActivity {
         height = displayMetrics.heightPixels;
         width = displayMetrics.widthPixels;
 
+        int playerSize = width/20;
+
         // Init player obj
         Image playerImg = null;
-        player = new Player(playerImg);
+        player = new Player(playerImg, playerSize);
 
         // Init enemy list
         enemyList = new ArrayList<>();
 
-        ActionButton fireButton = new ActionButton(player, new CartesianCoords(100, height - ActionButton.WIDTH - 50), ActionType.FIRE);
-        ActionButton iceButton = new ActionButton(player, new CartesianCoords(200 + ActionButton.WIDTH, height - ActionButton.WIDTH - 50), ActionType.ICE);
-        ActionButton lightningButton = new ActionButton(player, new CartesianCoords(300 + ActionButton.WIDTH * 2, height - ActionButton.WIDTH - 50), ActionType.LIGHTNING);
+        ActionBar actionBar = new ActionBar(player);
 
         // Init display obj
         display = new Display(this);
         display.addObj(player);
-        display.addObj(fireButton);
-        display.addObj(iceButton);
-        display.addObj(lightningButton);
-
+        display.addObj(actionBar);
         setContentView(display);
 
         // Init enemy generators
