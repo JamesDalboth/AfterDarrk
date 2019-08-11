@@ -16,8 +16,8 @@ public class ShadowHandGenerator extends EnemyGenerator {
     }
 
     @Override
-    protected Enemy makeEnemy() {
+    protected Enemy makeEnemy(int size) {
         double angle = Math.random() * Math.PI * 2;
-        return new ShadowHand(img, player, angle);
+        return new ShadowHand(img, player, angle, size);
     }
 }

@@ -12,17 +12,16 @@ import com.impulse.afterdarrk.Player;
 import com.impulse.afterdarrk.Utils.CartesianCoords;
 
 public class ActionButton extends DisplayObj {
-
-    public static final int WIDTH = 200;
-
     private final Player player;
-    private final CartesianCoords topLeft;
+    private final CartesianCoords position;
+    private final CartesianCoords size;
     private final ActionType actionType;
 
-    public ActionButton(Player player, CartesianCoords topLeft, ActionType actionType) {
+    public ActionButton(Player player, CartesianCoords position, CartesianCoords size, ActionType actionType) {
         this.player = player;
-        this.topLeft = topLeft;
+        this.position = position;
         this.actionType = actionType;
+        this.size = size;
     }
 
     @Override
@@ -41,18 +40,21 @@ public class ActionButton extends DisplayObj {
                 break;
         }
 
-        int left = (int) Math.round(topLeft.getX());
-        int top = (int) Math.round(topLeft.getY());
+        int left = (int) Math.round(position.getX());
+        int top = (int) Math.round(position.getY());
 
-        Rect rect = new Rect(left, top, left + WIDTH, top + WIDTH);
+        int width = (int) Math.round(size.getX());
+        int height = (int) Math.round(size.getY());
+
+        Rect rect = new Rect(left, top, left + width, top + height);
 
         canvas.drawRect(rect, paint);
     }
 
     @Override
     public boolean isHit(CartesianCoords pos) {
-        boolean horizontalContained = pos.getX() > topLeft.getX() && pos.getX() <= topLeft.getX() + WIDTH;
-        boolean verticalContained = pos.getY() > topLeft.getY() && pos.getY() <= topLeft.getY() + WIDTH;
+        boolean horizontalContained = pos.getX() > position.getX() && pos.getX() <= position.getX() + size.getX();
+        boolean verticalContained = pos.getY() > position.getY() && pos.getY() <= position.getY() + size.getY();
 
         return horizontalContained && verticalContained;
     }

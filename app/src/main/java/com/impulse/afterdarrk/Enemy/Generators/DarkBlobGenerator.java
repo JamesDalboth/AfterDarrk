@@ -17,9 +17,9 @@ public class DarkBlobGenerator extends EnemyGenerator {
     }
 
     @Override
-    protected Enemy makeEnemy() {
+    protected Enemy makeEnemy(int size) {
         double angle = Math.random() * Math.PI * 2;
-        Enemy enemy = new DarkBlob(img, player, angle);
+        Enemy enemy = new DarkBlob(img, player, angle, size);
         return enemy;
     }
 
