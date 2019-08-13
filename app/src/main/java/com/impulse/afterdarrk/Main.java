@@ -5,10 +5,15 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 
+import com.impulse.afterdarrk.Actions.Action;
+import com.impulse.afterdarrk.Actions.ActionBar;
+import com.impulse.afterdarrk.Actions.ActionButton;
+import com.impulse.afterdarrk.Actions.ActionType;
 import com.impulse.afterdarrk.Enemy.Enemy;
 import com.impulse.afterdarrk.Enemy.Generators.BlackAngelGenerator;
 import com.impulse.afterdarrk.Enemy.Generators.DarkBlobGenerator;
 import com.impulse.afterdarrk.Enemy.Generators.ShadowHandGenerator;
+import com.impulse.afterdarrk.Utils.CartesianCoords;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -47,16 +52,21 @@ public class Main extends AppCompatActivity {
         height = displayMetrics.heightPixels;
         width = displayMetrics.widthPixels;
 
+        int playerSize = width/20;
+
         // Init player obj
         Image playerImg = null;
-        player = new Player(playerImg);
+        player = new Player(playerImg, playerSize);
 
         // Init enemy list
         enemyList = new ArrayList<>();
 
-        // Init dislay obj
+        ActionBar actionBar = new ActionBar(player);
+
+        // Init display obj
         display = new Display(this);
         display.addObj(player);
+        display.addObj(actionBar);
         setContentView(display);
 
         // Init enemy generators

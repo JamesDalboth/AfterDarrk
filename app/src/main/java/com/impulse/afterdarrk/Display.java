@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class Display extends View implements View.OnTouchListener{
+public class Display extends View implements View.OnTouchListener {
 
     private List<DisplayObj> objs;
 
@@ -36,6 +36,12 @@ public class Display extends View implements View.OnTouchListener{
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
+        if (event.getAction() != MotionEvent.ACTION_DOWN) {
+            return false;
+        }
+
+        System.out.println("Display Clicked");
+
         for (Iterator<DisplayObj> iterator = objs.iterator(); iterator.hasNext();) {
             DisplayObj obj = iterator.next();
 
@@ -44,6 +50,7 @@ public class Display extends View implements View.OnTouchListener{
                 return true;
             }
         }
+
         return false;
     }
 

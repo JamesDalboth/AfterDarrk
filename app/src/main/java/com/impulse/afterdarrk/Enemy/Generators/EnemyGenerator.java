@@ -17,7 +17,7 @@ public abstract class EnemyGenerator {
         double n = Math.random();
         if (n < getProb()) {
             enemies_generated++;
-            Enemy enemy = makeEnemy();
+            Enemy enemy = makeEnemy(player.radius);
             display.addObj(enemy);
             enemyList.add(enemy);
         }
@@ -25,5 +25,5 @@ public abstract class EnemyGenerator {
 
     protected abstract double getProb();
 
-    protected abstract Enemy makeEnemy();
+    protected abstract Enemy makeEnemy(int size);
 }

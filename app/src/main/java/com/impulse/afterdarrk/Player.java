@@ -15,11 +15,14 @@ public class Player extends DisplayObj {
     private Enemy target;
     private Image image;
     private boolean alive;
-    private int radius = 100;
 
-    public Player(Image image) {
+    public final int radius;
+
+    public Player(Image image, int radius) {
         this.target = null;
         this.image = image;
+        this.radius = radius;
+
         alive = true;
     }
 
@@ -48,10 +51,7 @@ public class Player extends DisplayObj {
     public void draw(Canvas canvas) {
         Paint paint = new Paint();
         paint.setColor(Color.RED);
-        canvas.drawCircle((Main.width / 2) , (Main.height / 2) - (radius/2), 100, paint);
-        if (target == null) {
-            return;
-        }
+        canvas.drawCircle((Main.width / 2) , (Main.height / 2) - (radius/2), radius, paint);
     }
 
     @Override

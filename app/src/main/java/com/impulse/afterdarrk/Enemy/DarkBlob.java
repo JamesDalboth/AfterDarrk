@@ -12,11 +12,11 @@ public class DarkBlob extends Enemy {
 
     static int speed = 1;
 
-    public DarkBlob(Image img, Player player, double angle) {
+    public DarkBlob(Image img, Player player, double angle, int size) {
         super(EnemyType.BLOB, img, speed, player, angle, new ActionList(new ArrayList<ActionType>() {{
             add(ActionType.FIRE);
             add(ActionType.ICE);
-        }}));
+        }}), size);
     }
 
 }
