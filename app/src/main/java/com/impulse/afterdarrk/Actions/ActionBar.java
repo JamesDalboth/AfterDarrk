@@ -59,11 +59,11 @@ public class ActionBar extends DisplayObj {
 
     @Override
     public boolean isHit(CartesianCoords pos) {
-        if (pos.getY() >= top) {
+        System.out.println(pos.getY());
+        System.out.println(top);
+        if (pos.getY() < top) {
             return false;
         }
-
-        System.out.println("Hit Action Bar");
 
         for (ActionButton actionButton : actionButtons) {
             if (actionButton.isHit(pos)) {
@@ -78,6 +78,7 @@ public class ActionBar extends DisplayObj {
     public void touch(View view, MotionEvent event) {
         for (ActionButton actionButton : actionButtons) {
             if (actionButton.isHit(new CartesianCoords(event.getX(), event.getY()))) {
+                System.out.println("Touching button");
                 actionButton.touch(view, event);
                 return;
             }
