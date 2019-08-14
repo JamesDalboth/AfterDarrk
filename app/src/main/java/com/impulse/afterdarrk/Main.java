@@ -50,7 +50,7 @@ public class Main extends AppCompatActivity {
         //To get width and height from the screen on the device
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        height = displayMetrics.heightPixels;
+        height = displayMetrics.heightPixels - 48;
         width = displayMetrics.widthPixels;
 
         int playerSize = width/20;
