@@ -23,6 +23,8 @@ public class ActionBar extends DisplayObj {
     private final int height;
 
     public ActionBar(Player player) {
+        sortKey = 1;
+
         height = Main.height / 10;
 
         top = Main.height - height;
@@ -62,7 +64,6 @@ public class ActionBar extends DisplayObj {
         if (pos.getY() < top) {
             return false;
         }
-
         for (ActionButton actionButton : actionButtons) {
             if (actionButton.isHit(pos)) {
                 return true;
