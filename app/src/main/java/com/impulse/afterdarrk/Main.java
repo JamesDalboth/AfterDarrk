@@ -1,5 +1,6 @@
 package com.impulse.afterdarrk;
 
+import android.content.Intent;
 import android.media.Image;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -49,7 +50,7 @@ public class Main extends AppCompatActivity {
         //To get width and height from the screen on the device
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        height = displayMetrics.heightPixels;
+        height = displayMetrics.heightPixels - 48;
         width = displayMetrics.widthPixels;
 
         int playerSize = width/20;
@@ -109,4 +110,5 @@ public class Main extends AppCompatActivity {
         darkBlobGen.generate(enemyList, display);
         shadowHandGenerator.generate(enemyList, display);
     }
+
 }

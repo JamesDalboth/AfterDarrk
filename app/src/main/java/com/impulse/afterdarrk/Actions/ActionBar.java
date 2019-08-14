@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ActionBar extends DisplayObj {
+
     private List<ActionButton> actionButtons;
 
     private final int top;
@@ -60,12 +61,9 @@ public class ActionBar extends DisplayObj {
 
     @Override
     public boolean isHit(CartesianCoords pos) {
-        if (pos.getY() >= top) {
+        if (pos.getY() < top) {
             return false;
         }
-
-        System.out.println("Hit Action Bar");
-
         for (ActionButton actionButton : actionButtons) {
             if (actionButton.isHit(pos)) {
                 return true;

@@ -17,7 +17,9 @@ public class ActionButton extends DisplayObj {
     private final CartesianCoords size;
     private final ActionType actionType;
 
+
     ActionButton(Player player, CartesianCoords position, CartesianCoords size, ActionType actionType) {
+
         this.player = player;
         this.position = position;
         this.actionType = actionType;
