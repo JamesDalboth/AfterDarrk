@@ -16,13 +16,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ActionBar extends DisplayObj {
-
     private List<ActionButton> actionButtons;
 
     private final int top;
     private final int height;
 
     public ActionBar(Player player) {
+        sortKey = 1;
+
         height = Main.height / 10;
 
         top = Main.height - height;
