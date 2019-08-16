@@ -97,7 +97,7 @@ public class Main extends AppCompatActivity {
     private void calcScreenSize() {
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        height = displayMetrics.heightPixels - 48;
+        height = displayMetrics.heightPixels;
         width = displayMetrics.widthPixels;
     }
 
