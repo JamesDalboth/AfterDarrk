@@ -17,6 +17,7 @@ public class ActionList {
             actionPos++;
             return true;
         }
+
         actionPos = 0;
         return false;
     }

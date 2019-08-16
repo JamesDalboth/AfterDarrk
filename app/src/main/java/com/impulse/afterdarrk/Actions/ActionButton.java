@@ -26,12 +26,12 @@ public class ActionButton extends DisplayObj {
 
 
     ActionButton(Player player, CartesianCoords position, CartesianCoords size, ActionType actionType, Context context) {
-
         this.player = player;
         this.position = position;
         this.actionType = actionType;
         this.size = size;
-        switch (actionType) {
+
+        switch (this.actionType) {
             case FIRE:
                 bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.fire);
                 break;
