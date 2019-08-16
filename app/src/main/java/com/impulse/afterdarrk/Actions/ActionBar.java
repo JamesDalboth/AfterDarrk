@@ -42,13 +42,14 @@ public class ActionBar extends DisplayObj {
 
         createActionButtons(player, context, width, size);
         createDirectionButtons(player, context, width, size);
-
     }
 
     private void createActionButtons(Player player, Context activityContext, int width, CartesianCoords size) {
-        ActionButton fireButton = new ActionButton(player, new CartesianCoords(width/2, top + margin), size, ActionType.FIRE, activityContext);
-        ActionButton iceButton = new ActionButton(player, new CartesianCoords((width * 7)/4, top + margin), size, ActionType.ICE, activityContext);
-        ActionButton lightningButton = new ActionButton(player, new CartesianCoords(width * 3, top + margin), size, ActionType.LIGHTNING, activityContext);
+        int buttonTop = top + margin;
+
+        ActionButton fireButton = new ActionButton(player, new CartesianCoords(width/2, buttonTop), size, ActionType.FIRE, activityContext);
+        ActionButton iceButton = new ActionButton(player, new CartesianCoords((width * 7)/4, buttonTop), size, ActionType.ICE, activityContext);
+        ActionButton lightningButton = new ActionButton(player, new CartesianCoords(width * 3, buttonTop), size, ActionType.LIGHTNING, activityContext);
 
         actionButtons = new ArrayList<>();
 
@@ -58,8 +59,10 @@ public class ActionBar extends DisplayObj {
     }
 
     private void createDirectionButtons(Player player, Context activityContext, int width, CartesianCoords size) {
-        DirectionButton leftButton = new DirectionButton(player, new CartesianCoords(width * 7, top + margin), size, DirectionType.LEFT, activityContext);
-        DirectionButton rightButton = new DirectionButton(player, new CartesianCoords((width * 17)/2, top + margin), size, DirectionType.RIGHT, activityContext);
+        int buttonTop = top + margin;
+
+        DirectionButton leftButton = new DirectionButton(player, new CartesianCoords(width * 7, buttonTop), size, DirectionType.LEFT, activityContext);
+        DirectionButton rightButton = new DirectionButton(player, new CartesianCoords((width * 17)/2, buttonTop), size, DirectionType.RIGHT, activityContext);
 
         directionButtons = new ArrayList<>();
 
