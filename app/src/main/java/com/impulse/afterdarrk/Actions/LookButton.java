@@ -1,11 +1,8 @@
 package com.impulse.afterdarrk.Actions;
 
-import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.view.MotionEvent;
@@ -17,27 +14,24 @@ import com.impulse.afterdarrk.Player;
 import com.impulse.afterdarrk.R;
 import com.impulse.afterdarrk.Utils.CartesianCoords;
 
-public class ActionButton extends DisplayObj {
+public class LookButton extends DisplayObj {
     private final Player player;
     private final CartesianCoords position;
     private final CartesianCoords size;
-    private final ActionType actionType;
+    private final DirectionType directionType;
     private final Bitmap bitmap;
 
-    public ActionButton(Player player, CartesianCoords position, CartesianCoords size, ActionType actionType) {
+    public LookButton(Player player, CartesianCoords position, CartesianCoords size, DirectionType direction) {
         this.player = player;
         this.position = position;
-        this.actionType = actionType;
+        this.directionType = direction;
         this.size = size;
-        switch (actionType) {
-            case FIRE:
+        switch (directionType) {
+            case LEFT:
                 bitmap = BitmapFactory.decodeResource(Main.context.getResources(), R.drawable.fire);
                 break;
-            case ICE:
-                bitmap = BitmapFactory.decodeResource(Main.context.getResources(), R.drawable.ice);
-                break;
-            case LIGHTNING:
-                bitmap = BitmapFactory.decodeResource(Main.context.getResources(), R.drawable.lightning);
+            case RIGHT:
+                bitmap = BitmapFactory.decodeResource(Main.context.getResources(), R.drawable.fire);
                 break;
             default:
                 bitmap = null;
@@ -60,14 +54,16 @@ public class ActionButton extends DisplayObj {
 
     @Override
     public boolean isHit(CartesianCoords pos) {
-        boolean horizontalContained = pos.getX() > position.getX() && pos.getX() <= position.getX() + size.getX();
+      /*  boolean horizontalContained = pos.getX() > position.getX() && pos.getX() <= position.getX() + size.getX();
         boolean verticalContained = pos.getY() > position.getY() && pos.getY() <= position.getY() + size.getY();
 
-        return horizontalContained && verticalContained;
+        return horizontalContained && verticalContained;*/
+      return true;
     }
 
     @Override
     public void touch(View view, MotionEvent event) {
-        player.useAction(actionType);
+        /*player.useAction(directionType);*/
     }
+
 }

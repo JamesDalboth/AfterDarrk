@@ -1,5 +1,6 @@
 package com.impulse.afterdarrk;
 
+import android.content.Context;
 import android.content.Intent;
 import android.media.Image;
 import android.os.Bundle;
@@ -24,6 +25,8 @@ import java.util.TimerTask;
 
 public class Main extends AppCompatActivity {
     public static int width, height; // Width and height of screen
+
+    public static Context context; // Context of the activity
 
     // Used to load the 'native-lib' library on application startup.
     static {
@@ -52,6 +55,8 @@ public class Main extends AppCompatActivity {
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         height = displayMetrics.heightPixels - 48;
         width = displayMetrics.widthPixels;
+
+        context = Main.this;
 
         int playerSize = width/20;
 

@@ -23,19 +23,19 @@ public class ActionBar extends DisplayObj {
     private final int height;
 
     public ActionBar(Player player) {
-        height = Main.height / 10;
+        height = Main.height / 6;
 
-        top = Main.height - height;
+        top = Main.height - (height/5)*6;
 
         System.out.println(top);
 
-        int width = Main.width / 7;
+        int width = Main.width / 10;
 
         CartesianCoords size = new CartesianCoords(width, height);
 
-        ActionButton fireButton = new ActionButton(player, new CartesianCoords(width, top), size, ActionType.FIRE);
-        ActionButton iceButton = new ActionButton(player, new CartesianCoords(width * 3, top), size, ActionType.ICE);
-        ActionButton lightningButton = new ActionButton(player, new CartesianCoords(width * 5, top), size, ActionType.LIGHTNING);
+        ActionButton fireButton = new ActionButton(player, new CartesianCoords(width/2, top), size, ActionType.FIRE);
+        ActionButton iceButton = new ActionButton(player, new CartesianCoords((width * 7)/4, top), size, ActionType.ICE);
+        ActionButton lightningButton = new ActionButton(player, new CartesianCoords(width * 3, top), size, ActionType.LIGHTNING);
 
         actionButtons = new ArrayList<>();
 
@@ -46,11 +46,11 @@ public class ActionBar extends DisplayObj {
 
     @Override
     public void draw(Canvas canvas) {
-        Rect rect = new Rect(0, top, Main.width, height + top);
+    /*    Rect rect = new Rect(Main.width/7, top, (Main.width/7)*6, height + top);
         Paint paint = new Paint();
-        paint.setColor(Color.LTGRAY);
+        paint.setColor(Color.BLACK);
 
-        canvas.drawRect(rect, paint);
+        canvas.drawRect(rect, paint);*/
 
         for (ActionButton actionButton : actionButtons) {
             actionButton.draw(canvas);
