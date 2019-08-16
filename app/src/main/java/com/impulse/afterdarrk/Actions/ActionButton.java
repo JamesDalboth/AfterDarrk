@@ -33,13 +33,13 @@ public class ActionButton extends DisplayObj {
         this.size = size;
         switch (actionType) {
             case FIRE:
-                bitmap = BitmapFactory.decodeResource(Main.context.getResources(), R.drawable.fire);
+                bitmap = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(Main.context.getResources(), R.drawable.fire), (int) Math.round(size.getX()), (int) Math.round(size.getY()), true);
                 break;
             case ICE:
-                bitmap = BitmapFactory.decodeResource(Main.context.getResources(), R.drawable.ice);
+                bitmap = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(Main.context.getResources(), R.drawable.ice), (int) Math.round(size.getX()), (int) Math.round(size.getY()), true);
                 break;
             case LIGHTNING:
-                bitmap = BitmapFactory.decodeResource(Main.context.getResources(), R.drawable.lightning);
+                bitmap = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(Main.context.getResources(), R.drawable.lightning), (int) Math.round(size.getX()), (int) Math.round(size.getY()), true);
                 break;
             default:
                 bitmap = null;

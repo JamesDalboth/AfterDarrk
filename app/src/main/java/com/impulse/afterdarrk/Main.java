@@ -2,10 +2,13 @@ package com.impulse.afterdarrk;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.media.Image;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
+import android.view.Window;
+import android.view.WindowManager;
 
 import com.impulse.afterdarrk.Actions.Action;
 import com.impulse.afterdarrk.Actions.ActionBar;

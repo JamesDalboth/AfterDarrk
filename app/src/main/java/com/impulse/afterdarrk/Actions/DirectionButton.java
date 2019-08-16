@@ -14,24 +14,24 @@ import com.impulse.afterdarrk.Player;
 import com.impulse.afterdarrk.R;
 import com.impulse.afterdarrk.Utils.CartesianCoords;
 
-public class LookButton extends DisplayObj {
+public class DirectionButton extends DisplayObj {
     private final Player player;
     private final CartesianCoords position;
     private final CartesianCoords size;
     private final DirectionType directionType;
     private final Bitmap bitmap;
 
-    public LookButton(Player player, CartesianCoords position, CartesianCoords size, DirectionType direction) {
+    public DirectionButton(Player player, CartesianCoords position, CartesianCoords size, DirectionType direction) {
         this.player = player;
         this.position = position;
         this.directionType = direction;
         this.size = size;
         switch (directionType) {
             case LEFT:
-                bitmap = BitmapFactory.decodeResource(Main.context.getResources(), R.drawable.fire);
+                bitmap = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(Main.context.getResources(), R.drawable.left), (int) Math.round(size.getX()), (int) Math.round(size.getY()), true);
                 break;
             case RIGHT:
-                bitmap = BitmapFactory.decodeResource(Main.context.getResources(), R.drawable.fire);
+                bitmap = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(Main.context.getResources(), R.drawable.right), (int) Math.round(size.getX()), (int) Math.round(size.getY()), true);
                 break;
             default:
                 bitmap = null;
@@ -54,16 +54,11 @@ public class LookButton extends DisplayObj {
 
     @Override
     public boolean isHit(CartesianCoords pos) {
-      /*  boolean horizontalContained = pos.getX() > position.getX() && pos.getX() <= position.getX() + size.getX();
-        boolean verticalContained = pos.getY() > position.getY() && pos.getY() <= position.getY() + size.getY();
-
-        return horizontalContained && verticalContained;*/
       return true;
     }
 
     @Override
     public void touch(View view, MotionEvent event) {
-        /*player.useAction(directionType);*/
     }
 
 }

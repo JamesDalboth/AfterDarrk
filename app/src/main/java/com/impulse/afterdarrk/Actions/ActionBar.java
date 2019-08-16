@@ -18,6 +18,7 @@ import java.util.List;
 public class ActionBar extends DisplayObj {
 
     private List<ActionButton> actionButtons;
+    private List<DirectionButton> directionButtons;
 
     private final int top;
     private final int height;
@@ -44,6 +45,15 @@ public class ActionBar extends DisplayObj {
         actionButtons.add(fireButton);
         actionButtons.add(iceButton);
         actionButtons.add(lightningButton);
+
+        DirectionButton leftButton = new DirectionButton(player, new CartesianCoords(width * 7, top), size, DirectionType.LEFT);
+        DirectionButton rightButton = new DirectionButton(player, new CartesianCoords((width * 17)/2, top), size, DirectionType.RIGHT);
+
+        directionButtons = new ArrayList<>();
+
+        directionButtons.add(leftButton);
+        directionButtons.add(rightButton);
+
     }
 
     @Override
@@ -56,6 +66,10 @@ public class ActionBar extends DisplayObj {
 
         for (ActionButton actionButton : actionButtons) {
             actionButton.draw(canvas);
+        }
+
+        for (DirectionButton directionButton : directionButtons) {
+            directionButton.draw(canvas);
         }
     }
 
