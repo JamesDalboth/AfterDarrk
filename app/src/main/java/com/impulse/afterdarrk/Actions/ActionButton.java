@@ -22,10 +22,10 @@ public class ActionButton extends DisplayObj {
     private final CartesianCoords position;
     private final CartesianCoords size;
     private final ActionType actionType;
-    private final Bitmap bitmap;
+    private  Bitmap bitmap;
 
 
-    ActionButton(Player player, CartesianCoords position, CartesianCoords size, ActionType actionType) {
+    ActionButton(Player player, CartesianCoords position, CartesianCoords size, ActionType actionType, Context context) {
 
         this.player = player;
         this.position = position;
@@ -33,18 +33,21 @@ public class ActionButton extends DisplayObj {
         this.size = size;
         switch (actionType) {
             case FIRE:
-                bitmap = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(Main.context.getResources(), R.drawable.fire), (int) Math.round(size.getX()), (int) Math.round(size.getY()), true);
+                bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.fire);
                 break;
             case ICE:
-                bitmap = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(Main.context.getResources(), R.drawable.ice), (int) Math.round(size.getX()), (int) Math.round(size.getY()), true);
+                bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.ice);
                 break;
             case LIGHTNING:
-                bitmap = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(Main.context.getResources(), R.drawable.lightning), (int) Math.round(size.getX()), (int) Math.round(size.getY()), true);
+                bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.lightning);
                 break;
             default:
                 bitmap = null;
                 break;
         }
+
+        bitmap = Bitmap.createScaledBitmap(bitmap, (int) Math.round(size.getX()), (int) Math.round(size.getY()), true);
+
     }
 
     @Override

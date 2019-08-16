@@ -1,5 +1,6 @@
 package com.impulse.afterdarrk.Actions;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -20,18 +21,20 @@ public class DirectionButton extends DisplayObj {
     private final CartesianCoords size;
     private final DirectionType directionType;
     private final Bitmap bitmap;
+    private Context activityContext;
 
-    public DirectionButton(Player player, CartesianCoords position, CartesianCoords size, DirectionType direction) {
+    public DirectionButton(Player player, CartesianCoords position, CartesianCoords size, DirectionType direction, Context context) {
         this.player = player;
         this.position = position;
         this.directionType = direction;
         this.size = size;
+        this.activityContext = context;
         switch (directionType) {
             case LEFT:
-                bitmap = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(Main.context.getResources(), R.drawable.left), (int) Math.round(size.getX()), (int) Math.round(size.getY()), true);
+                bitmap = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(activityContext.getResources(), R.drawable.left), (int) Math.round(size.getX()), (int) Math.round(size.getY()), true);
                 break;
             case RIGHT:
-                bitmap = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(Main.context.getResources(), R.drawable.right), (int) Math.round(size.getX()), (int) Math.round(size.getY()), true);
+                bitmap = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(activityContext.getResources(), R.drawable.right), (int) Math.round(size.getX()), (int) Math.round(size.getY()), true);
                 break;
             default:
                 bitmap = null;
