@@ -45,8 +45,7 @@ public class Display extends View implements View.OnTouchListener {
             return false;
         }
 
-        System.out.println("Display Clicked");
-
+        // Need to use iterator as by touching something we could remove something from this list.
         for (Iterator<DisplayObj> iterator = objs.iterator(); iterator.hasNext();) {
             DisplayObj obj = iterator.next();
 
