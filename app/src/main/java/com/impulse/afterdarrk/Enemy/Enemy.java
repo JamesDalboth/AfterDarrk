@@ -63,7 +63,7 @@ public abstract class Enemy extends DisplayObj {
         return result;
     }
 
-    public boolean isDead() {                                                     // is enemy dead?
+    public boolean isDead() {
         return dead;
     }
 
@@ -136,7 +136,7 @@ public abstract class Enemy extends DisplayObj {
     }
 
     private CartesianCoords getPosition() {
-        return polar.toCatesian().addOff(new CartesianCoords(Main.width/2, Main.height/2));
+        return polar.toCartesian().addOff(new CartesianCoords(Main.width/2, Main.height/2));
     }
 
     @Override

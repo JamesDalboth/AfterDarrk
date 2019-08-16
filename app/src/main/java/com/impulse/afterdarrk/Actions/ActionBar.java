@@ -1,5 +1,6 @@
 package com.impulse.afterdarrk.Actions;
 
+import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -18,44 +19,58 @@ import java.util.List;
 public class ActionBar extends DisplayObj {
 
     private List<ActionButton> actionButtons;
+    private List<DirectionButton> directionButtons;
 
     private final int top;
     private final int height;
 
-    public ActionBar(Player player) {
+    private Context activityContext;
+
+    public ActionBar(Player player, Context context) {
+
+        activityContext = context;
+
         sortKey = 1;
 
-        height = Main.height / 10;
+        height = Main.height / 6;
 
-        top = Main.height - height;
+        top = Main.height - (height/5)*6;
 
         System.out.println(top);
 
-        int width = Main.width / 7;
+        int width = Main.width / 10;
 
         CartesianCoords size = new CartesianCoords(width, height);
 
-        ActionButton fireButton = new ActionButton(player, new CartesianCoords(width, top), size, ActionType.FIRE);
-        ActionButton iceButton = new ActionButton(player, new CartesianCoords(width * 3, top), size, ActionType.ICE);
-        ActionButton lightningButton = new ActionButton(player, new CartesianCoords(width * 5, top), size, ActionType.LIGHTNING);
+        ActionButton fireButton = new ActionButton(player, new CartesianCoords(width/2, top), size, ActionType.FIRE, activityContext);
+        ActionButton iceButton = new ActionButton(player, new CartesianCoords((width * 7)/4, top), size, ActionType.ICE, activityContext);
+        ActionButton lightningButton = new ActionButton(player, new CartesianCoords(width * 3, top), size, ActionType.LIGHTNING, activityContext);
 
         actionButtons = new ArrayList<>();
 
         actionButtons.add(fireButton);
         actionButtons.add(iceButton);
         actionButtons.add(lightningButton);
+
+        DirectionButton leftButton = new DirectionButton(player, new CartesianCoords(width * 7, top), size, DirectionType.LEFT, activityContext);
+        DirectionButton rightButton = new DirectionButton(player, new CartesianCoords((width * 17)/2, top), size, DirectionType.RIGHT, activityContext);
+
+        directionButtons = new ArrayList<>();
+
+        directionButtons.add(leftButton);
+        directionButtons.add(rightButton);
+
     }
 
     @Override
     public void draw(Canvas canvas) {
-        Rect rect = new Rect(0, top, Main.width, height + top);
-        Paint paint = new Paint();
-        paint.setColor(Color.LTGRAY);
-
-        canvas.drawRect(rect, paint);
 
         for (ActionButton actionButton : actionButtons) {
             actionButton.draw(canvas);
+        }
+
+        for (DirectionButton directionButton : directionButtons) {
+            directionButton.draw(canvas);
         }
     }
 

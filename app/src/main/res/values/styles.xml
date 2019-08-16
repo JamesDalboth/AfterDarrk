@@ -9,7 +9,7 @@
     </style>
 
     <style name="NameFont">
-        <item name="android:textSize">73sp</item>
+        <item name="android:textSize">100sp</item>
         <item name="android:textColor">#F8F8FF</item>
         <item name="android:textStyle">bold</item>
         <item name="android:layout_weight">1</item>
@@ -19,13 +19,20 @@
     </style>
 
     <style name="TapFont">
-    <item name="android:textSize">15sp</item>
+    <item name="android:textSize">20sp</item>
     <item name="android:textColor">#F8F8FF</item>
     <item name="android:textStyle">bold</item>
     <item name="android:layout_weight">1</item>
     <item name="android:layout_width">wrap_content</item>
     <item name="android:layout_height">wrap_content</item>
     <item name="android:fontFamily">@font/menu</item>
+    </style>
+
+    <style name="AppFullScreenTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <item name="android:windowNoTitle">true</item>
+    <item name="android:windowActionBar">false</item>
+    <item name="android:windowFullscreen">true</item>
+    <item name="android:windowContentOverlay">@null</item>
     </style>
 
 </resources>

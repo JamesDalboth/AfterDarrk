@@ -1,11 +1,9 @@
 package com.impulse.afterdarrk.Actions;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.view.MotionEvent;
@@ -17,37 +15,31 @@ import com.impulse.afterdarrk.Player;
 import com.impulse.afterdarrk.R;
 import com.impulse.afterdarrk.Utils.CartesianCoords;
 
-public class ActionButton extends DisplayObj {
+public class DirectionButton extends DisplayObj {
     private final Player player;
     private final CartesianCoords position;
     private final CartesianCoords size;
-    private final ActionType actionType;
-    private  Bitmap bitmap;
+    private final DirectionType directionType;
+    private final Bitmap bitmap;
+    private Context activityContext;
 
-
-    ActionButton(Player player, CartesianCoords position, CartesianCoords size, ActionType actionType, Context context) {
-
+    public DirectionButton(Player player, CartesianCoords position, CartesianCoords size, DirectionType direction, Context context) {
         this.player = player;
         this.position = position;
-        this.actionType = actionType;
+        this.directionType = direction;
         this.size = size;
-        switch (actionType) {
-            case FIRE:
-                bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.fire);
+        this.activityContext = context;
+        switch (directionType) {
+            case LEFT:
+                bitmap = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(activityContext.getResources(), R.drawable.left), (int) Math.round(size.getX()), (int) Math.round(size.getY()), true);
                 break;
-            case ICE:
-                bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.ice);
-                break;
-            case LIGHTNING:
-                bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.lightning);
+            case RIGHT:
+                bitmap = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(activityContext.getResources(), R.drawable.right), (int) Math.round(size.getX()), (int) Math.round(size.getY()), true);
                 break;
             default:
                 bitmap = null;
                 break;
         }
-
-        bitmap = Bitmap.createScaledBitmap(bitmap, (int) Math.round(size.getX()), (int) Math.round(size.getY()), true);
-
     }
 
     @Override
@@ -65,14 +57,11 @@ public class ActionButton extends DisplayObj {
 
     @Override
     public boolean isHit(CartesianCoords pos) {
-        boolean horizontalContained = pos.getX() > position.getX() && pos.getX() <= position.getX() + size.getX();
-        boolean verticalContained = pos.getY() > position.getY() && pos.getY() <= position.getY() + size.getY();
-
-        return horizontalContained && verticalContained;
+      return true;
     }
 
     @Override
     public void touch(View view, MotionEvent event) {
-        player.useAction(actionType);
     }
+
 }

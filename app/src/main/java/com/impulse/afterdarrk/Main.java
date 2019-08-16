@@ -1,6 +1,6 @@
 package com.impulse.afterdarrk;
 
-import android.content.Intent;
+import android.content.Context;
 import android.media.Image;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -24,6 +24,8 @@ import java.util.TimerTask;
 
 public class Main extends AppCompatActivity {
     public static int width, height; // Width and height of screen
+
+    public Context context;
 
     // Used to load the 'native-lib' library on application startup.
     static {
@@ -53,6 +55,8 @@ public class Main extends AppCompatActivity {
         height = displayMetrics.heightPixels - 48;
         width = displayMetrics.widthPixels;
 
+        context = Main.this;
+
         int playerSize = width/20;
 
         // Init player obj
@@ -62,7 +66,7 @@ public class Main extends AppCompatActivity {
         // Init enemy list
         enemyList = new ArrayList<>();
 
-        ActionBar actionBar = new ActionBar(player);
+        ActionBar actionBar = new ActionBar(player, context);
 
         // Init display obj
         display = new Display(this);

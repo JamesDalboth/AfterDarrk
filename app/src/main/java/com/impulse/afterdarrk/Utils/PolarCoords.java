@@ -31,7 +31,7 @@ public final class PolarCoords {
         return new PolarCoords(radius + delta, theta);
     }
 
-    public CartesianCoords toCatesian() {
+    public CartesianCoords toCartesian() {
         double x = radius * Math.cos(theta);
         double y = radius * Math.sin(theta);
         return new CartesianCoords(x, y);
