@@ -1,5 +1,8 @@
 package com.impulse.afterdarrk.Enemy;
 
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -13,46 +16,58 @@ import com.impulse.afterdarrk.Actions.ActionType;
 import com.impulse.afterdarrk.DisplayObj;
 import com.impulse.afterdarrk.Main;
 import com.impulse.afterdarrk.Player;
+import com.impulse.afterdarrk.R;
 import com.impulse.afterdarrk.Utils.CartesianCoords;
 import com.impulse.afterdarrk.Utils.PolarCoords;
 
 import java.util.List;
 
 public abstract class Enemy extends DisplayObj {
-    // Initial Distance for enemies to spawn at
-    static int INIT_DISTANCE = 1000;
-
-    //Number of enemies spawned in at the moment
-    public static int NUM_ENEMIES = 0;
-
+    private static int INIT_DISTANCE = 1000;
     private static int ACTION_WIDTH = 50;
 
-    protected Player player;
+    public static int NUM_ENEMIES = 0;
+
     private EnemyType type;
     private Image img;
     private ActionList actions;
     private boolean dead;
     private final int radius;
-
     private int speed;
     private PolarCoords polar;
+    private final Context context;
 
+    private Bitmap fireBitmap;
+    private Bitmap iceBitmap;
+    private Bitmap lightningBitmap;
+
+    protected Player player;
 
     public Enemy(EnemyType type, Image img, int speed, Player player,
-                 double angle, ActionList actions, int size) {
+                 double angle, ActionList actions, int size, Context context) {
         NUM_ENEMIES++;
 
         this.type = type;
         this.img = img;
-
         this.actions = actions;
-
         this.dead = false;
         this.speed = speed;
         this.player = player;
         this.polar = new PolarCoords(INIT_DISTANCE, angle);
-
         this.radius = size;
+        this.context = context;
+
+        initButtonGraphics(context);
+    }
+
+    private void initButtonGraphics(Context context) {
+        fireBitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.fire);
+        iceBitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.ice);
+        lightningBitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.lightning);
+
+        fireBitmap = Bitmap.createScaledBitmap(fireBitmap, ACTION_WIDTH, ACTION_WIDTH, true);
+        iceBitmap = Bitmap.createScaledBitmap(iceBitmap, ACTION_WIDTH, ACTION_WIDTH, true);
+        lightningBitmap = Bitmap.createScaledBitmap(lightningBitmap, ACTION_WIDTH, ACTION_WIDTH, true);
     }
 
     public boolean attack(ActionType type) {
@@ -105,33 +120,29 @@ public abstract class Enemy extends DisplayObj {
     }
 
     private void drawActions(Canvas canvas) {
-        Paint paint = new Paint();
-
         List<ActionType> remaining = actions.remaining();
 
         double width = remaining.size() * ACTION_WIDTH + (remaining.size () - 1) * ACTION_WIDTH/2;
-
         double left = getPosition().getX() - width/2;
 
         int rectTop = (int) Math.floor(getPosition().getY()) - radius - ACTION_WIDTH * 2;
 
         for (int i = 0; i < remaining.size(); i++) {
-            switch (remaining.get(i)) {
-                case FIRE:
-                    paint.setColor(Color.RED);
-                    break;
-                case ICE:
-                    paint.setColor(Color.BLUE);
-                    break;
-                case LIGHTNING:
-                    paint.setColor(Color.BLACK);
-                    break;
-            }
-
             int rectLeft = (int) Math.round(left + (i * ACTION_WIDTH * 3/2));
 
             Rect actionRect = new Rect(rectLeft, rectTop, rectLeft + ACTION_WIDTH, rectTop + ACTION_WIDTH);
-            canvas.drawRect(actionRect, paint);
+
+            switch (remaining.get(i)) {
+                case ICE:
+                    canvas.drawBitmap(iceBitmap, null, actionRect, null);
+                    break;
+                case FIRE:
+                    canvas.drawBitmap(fireBitmap, null, actionRect, null);
+                    break;
+                case LIGHTNING:
+                    canvas.drawBitmap(lightningBitmap, null, actionRect, null);
+                    break;
+            }
         }
     }
 

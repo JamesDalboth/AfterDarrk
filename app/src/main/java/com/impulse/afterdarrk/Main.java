@@ -28,7 +28,6 @@ public class Main extends AppCompatActivity {
         System.loadLibrary("native-lib");
     }
 
-
     // Generators for different enemies
     private BlackAngelGenerator blackAngleGen;
     private DarkBlobGenerator darkBlobGen;
@@ -42,8 +41,6 @@ public class Main extends AppCompatActivity {
 
     public static int width, height;
 
-    public Context context;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,8 +48,6 @@ public class Main extends AppCompatActivity {
         // Init Code
         // To get width and height from the screen on the device
         calcScreenSize();
-
-        context = this;
 
         init();
 
@@ -67,31 +62,34 @@ public class Main extends AppCompatActivity {
     }
 
     private void init() {
-        int playerSize = width/20;
-
-        initPlayerObj(playerSize);
         enemyList = new ArrayList<>();
-        ActionBar actionBar = new ActionBar(player, context);
-        initDisplayObj(actionBar);
-        initEnemyGenerators();
-    }
 
-    private void initEnemyGenerators() {
-        blackAngleGen = new BlackAngelGenerator(player);
-        darkBlobGen = new DarkBlobGenerator(player);
-        shadowHandGenerator = new ShadowHandGenerator(player);
-    }
-
-    private void initDisplayObj(ActionBar actionBar) {
         display = new Display(this);
-        display.addObj(player);
-        display.addObj(actionBar);
+
+        initPlayerObj();
+        initButtons();
+        initEnemyGenerators();
+
         setContentView(display);
     }
 
-    private void initPlayerObj(int playerSize) {
+    private void initButtons() {
+        ActionBar actionBar = new ActionBar(player, this);
+        display.addObj(actionBar);
+    }
+
+    private void initEnemyGenerators() {
+        blackAngleGen = new BlackAngelGenerator(player, this);
+        darkBlobGen = new DarkBlobGenerator(player, this);
+        shadowHandGenerator = new ShadowHandGenerator(player, this);
+    }
+
+    private void initPlayerObj() {
+        int playerSize = width/20;
+
         Image playerImg = null;
         player = new Player(playerImg, playerSize);
+        display.addObj(player);
     }
 
     private void calcScreenSize() {

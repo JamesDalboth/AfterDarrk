@@ -1,5 +1,6 @@
 package com.impulse.afterdarrk.Enemy;
 
+import android.content.Context;
 import android.media.Image;
 
 import com.impulse.afterdarrk.Actions.ActionList;
@@ -11,12 +12,12 @@ import java.util.ArrayList;
 public class ShadowHand extends Enemy {
     static int speed = 1;
 
-    public ShadowHand(Image img, Player player, double angle, int size) {
+    public ShadowHand(Image img, Player player, double angle, int size, Context context) {
         super(EnemyType.HAND, img, speed, player, angle, new ActionList(new ArrayList<ActionType>() {{
             add(ActionType.FIRE);
             add(ActionType.LIGHTNING);
             add(ActionType.LIGHTNING);
             add(ActionType.ICE);
-        }}), size);
+        }}), size, context);
     }
 }

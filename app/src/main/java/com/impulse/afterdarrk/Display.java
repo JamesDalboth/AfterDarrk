@@ -34,7 +34,8 @@ public class Display extends View implements View.OnTouchListener {
         insertionSort.insertionSort(objs);
 
         super.draw(canvas);
-        for (DisplayObj obj : objs) {
+        for (Iterator<DisplayObj> iterator = objs.iterator(); iterator.hasNext();) {
+            DisplayObj obj = iterator.next();
             obj.draw(canvas);
         }
     }
@@ -59,6 +60,7 @@ public class Display extends View implements View.OnTouchListener {
     }
 
     public void remove(Enemy enemy) {
+        System.out.println("Removing enemy");
         objs.remove(enemy);
     }
 }

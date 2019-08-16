@@ -1,5 +1,6 @@
 package com.impulse.afterdarrk.Enemy.Generators;
 
+import android.content.Context;
 import android.media.Image;
 
 import com.impulse.afterdarrk.Display;
@@ -9,9 +10,11 @@ import com.impulse.afterdarrk.Player;
 import java.util.List;
 
 public abstract class EnemyGenerator {
-    protected Image img;
+    protected Context context;
     protected Player player;
-    protected int enemies_generated;
+
+    Image img;
+    int enemies_generated;
 
     public void generate(List<Enemy> enemyList, Display display) {
         double n = Math.random();

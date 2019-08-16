@@ -22,7 +22,7 @@ public class ActionButton extends DisplayObj {
     private final CartesianCoords position;
     private final CartesianCoords size;
     private final ActionType actionType;
-    private  Bitmap bitmap;
+    private Bitmap bitmap;
 
 
     ActionButton(Player player, CartesianCoords position, CartesianCoords size, ActionType actionType, Context context) {
