@@ -5,8 +5,9 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import com.impulse.afterdarrk.Utils.CartesianCoords;
+import com.impulse.afterdarrk.Utils.Sortable;
 
-abstract public class DisplayObj {
+abstract public class DisplayObj extends Sortable {
 
     abstract public void draw(Canvas canvas);
 

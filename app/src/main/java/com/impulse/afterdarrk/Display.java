@@ -7,6 +7,7 @@ import android.view.View;
 
 import com.impulse.afterdarrk.Enemy.Enemy;
 import com.impulse.afterdarrk.Utils.CartesianCoords;
+import com.impulse.afterdarrk.Utils.InsertionSort;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -28,6 +29,10 @@ public class Display extends View implements View.OnTouchListener {
 
     @Override
     public void draw(Canvas canvas) {
+        InsertionSort<DisplayObj> insertionSort = new InsertionSort<>();
+
+        insertionSort.insertionSort(objs);
+
         super.draw(canvas);
         for (DisplayObj obj : objs) {
             obj.draw(canvas);
