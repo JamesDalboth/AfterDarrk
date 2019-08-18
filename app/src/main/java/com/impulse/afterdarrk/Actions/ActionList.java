@@ -5,7 +5,6 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import com.impulse.afterdarrk.Display.DisplayObj;
-import com.impulse.afterdarrk.Enemy.Enemy;
 import com.impulse.afterdarrk.Utils.CartesianCoords;
 
 import java.util.ArrayList;

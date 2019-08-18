@@ -42,6 +42,7 @@ public class ActionBar extends DisplayObj {
         DirectionButton leftButton = new DirectionButton(player, size, DirectionType.LEFT, new CartesianCoords(width * 7, MARGIN), this);
         DirectionButton rightButton = new DirectionButton(player, size, DirectionType.RIGHT, new CartesianCoords((width * 17)/2, MARGIN), this);
 
+
         addObj(leftButton);
         addObj(rightButton);
     }
