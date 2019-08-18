@@ -30,7 +30,9 @@ public class Player extends DisplayObj {
         if (target == null) {
             return;
         }
+
         target.attack(actionType);
+
         if (target.isDead()) {
             target = null;
         }
@@ -40,12 +42,16 @@ public class Player extends DisplayObj {
         this.target = setTarget;
     }
 
-    public boolean isAlive() {
-        return alive;
-    }
-
     public void die() {
         alive = false;
+    }
+
+    public Enemy getEnemy() {
+        return target;
+    }
+
+    boolean isAlive() {
+        return alive;
     }
 
     public void draw(Canvas canvas) {
@@ -54,17 +60,10 @@ public class Player extends DisplayObj {
         canvas.drawCircle((Main.width / 2) , (Main.height / 2) - (radius/2), radius, paint);
     }
 
+    // Player should not be clickable
     @Override
-    public boolean isHit(CartesianCoords pos) {
+    public boolean touch(View view, MotionEvent event) {
         return false;
     }
 
-    @Override
-    public void touch(View view, MotionEvent event) {
-
-    }
-
-    public Enemy getEnemy() {
-        return target;
-    }
 }

@@ -40,6 +40,11 @@ public class Display extends View implements View.OnTouchListener {
         }
     }
 
+    public void remove(Enemy enemy) {
+        System.out.println("Removing enemy");
+        objs.remove(enemy);
+    }
+
     @Override
     public boolean onTouch(View v, MotionEvent event) {
         if (event.getAction() != MotionEvent.ACTION_DOWN) {
@@ -50,17 +55,11 @@ public class Display extends View implements View.OnTouchListener {
         for (Iterator<DisplayObj> iterator = objs.iterator(); iterator.hasNext();) {
             DisplayObj obj = iterator.next();
 
-            if (obj.isHit(new CartesianCoords(event.getX(), event.getY()))) {
-                obj.touch(v, event);
+            if (obj.touch(v, event)) {
                 return true;
             }
         }
 
         return false;
-    }
-
-    public void remove(Enemy enemy) {
-        System.out.println("Removing enemy");
-        objs.remove(enemy);
     }
 }

@@ -98,10 +98,19 @@ public abstract class Enemy extends DisplayObj {
         move();
     }
 
-    public void touch(View v, MotionEvent event) {
-        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+    private CartesianCoords getPosition() {
+        return polar.toCartesian().addOff(new CartesianCoords(Main.width/2, Main.height/2));
+    }
+
+    public boolean touch(View v, MotionEvent event) {
+        CartesianCoords pos = new CartesianCoords(event.getX(), event.getY());
+
+        if (pos.subOff(getPosition()).toPolar().getRadius() < radius) {
             player.setEnemy(this);
+            return true;
         }
+
+        return false;
     }
 
     public void draw(Canvas canvas) {
@@ -114,7 +123,7 @@ public abstract class Enemy extends DisplayObj {
         }
 
         canvas.drawCircle(Math.round(getPosition().getX()),
-                                     Math.round(getPosition().getY() - (radius /2)), radius, paint);
+                Math.round(getPosition().getY() - (radius /2)), radius, paint);
 
         drawActions(canvas);
     }
@@ -144,14 +153,5 @@ public abstract class Enemy extends DisplayObj {
                     break;
             }
         }
-    }
-
-    private CartesianCoords getPosition() {
-        return polar.toCartesian().addOff(new CartesianCoords(Main.width/2, Main.height/2));
-    }
-
-    @Override
-    public boolean isHit(CartesianCoords pos) {
-        return (pos.subOff(getPosition()).toPolar().getRadius() < radius);
     }
 }

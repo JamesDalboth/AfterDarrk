@@ -94,27 +94,13 @@ public class ActionBar extends DisplayObj {
     }
 
     @Override
-    public boolean isHit(CartesianCoords pos) {
-        if (pos.getY() < top) {
-            return false;
-        }
-
+    public boolean touch(View view, MotionEvent event) {
         for (ActionButton actionButton : actionButtons) {
-            if (actionButton.isHit(pos)) {
+            if (actionButton.touch(view, event)) {
                 return true;
             }
         }
 
         return false;
-    }
-
-    @Override
-    public void touch(View view, MotionEvent event) {
-        for (ActionButton actionButton : actionButtons) {
-            if (actionButton.isHit(new CartesianCoords(event.getX(), event.getY()))) {
-                actionButton.touch(view, event);
-                return;
-            }
-        }
     }
 }

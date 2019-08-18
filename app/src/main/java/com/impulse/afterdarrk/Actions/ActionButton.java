@@ -24,7 +24,6 @@ public class ActionButton extends DisplayObj {
     private final ActionType actionType;
     private Bitmap bitmap;
 
-
     ActionButton(Player player, CartesianCoords position, CartesianCoords size, ActionType actionType, Context context) {
         this.player = player;
         this.position = position;
@@ -47,7 +46,6 @@ public class ActionButton extends DisplayObj {
         }
 
         bitmap = Bitmap.createScaledBitmap(bitmap, (int) Math.round(size.getX()), (int) Math.round(size.getY()), true);
-
     }
 
     @Override
@@ -64,15 +62,16 @@ public class ActionButton extends DisplayObj {
     }
 
     @Override
-    public boolean isHit(CartesianCoords pos) {
+    public boolean touch(View view, MotionEvent event) {
+        CartesianCoords pos = new CartesianCoords(event.getX(), event.getY());
         boolean horizontalContained = pos.getX() > position.getX() && pos.getX() <= position.getX() + size.getX();
         boolean verticalContained = pos.getY() > position.getY() && pos.getY() <= position.getY() + size.getY();
 
-        return horizontalContained && verticalContained;
-    }
+        if (horizontalContained && verticalContained) {
+            player.useAction(actionType);
+            return true;
+        }
 
-    @Override
-    public void touch(View view, MotionEvent event) {
-        player.useAction(actionType);
+        return false;
     }
 }

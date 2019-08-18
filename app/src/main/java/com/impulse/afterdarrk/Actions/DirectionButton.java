@@ -56,12 +56,7 @@ public class DirectionButton extends DisplayObj {
     }
 
     @Override
-    public boolean isHit(CartesianCoords pos) {
-      return true;
+    public boolean touch(View view, MotionEvent event) {
+        return false;
     }
-
-    @Override
-    public void touch(View view, MotionEvent event) {
-    }
-
 }
