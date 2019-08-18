@@ -19,7 +19,7 @@ public final class CartesianCoords {
 
     @Override
     public String toString() {
-        return "(X,Y) : " + "(" + x + "," + y + ")";
+        return "(X, Y) : " + "(" + x + "," + y + ")";
     }
 
     @Override
@@ -27,9 +27,10 @@ public final class CartesianCoords {
         return toString().hashCode();
     }
 
-    public PolarCoords toPolar() {
-        double radius = Math.sqrt(Math.pow(x,2) + Math.pow(y,2));
-        double theta = Math.atan2(y,x);
+    public PolarCoords toPolar(CartesianCoords origin) {
+        CartesianCoords offset = subOff(origin);
+        double radius = Math.sqrt(Math.pow(offset.getX(), 2) + Math.pow(offset.getY(), 2));
+        double theta = Math.atan2(offset.getY(), offset.getX());
         return new PolarCoords(radius, theta);
     }
 

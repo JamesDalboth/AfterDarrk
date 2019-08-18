@@ -1,6 +1,5 @@
 package com.impulse.afterdarrk.Actions;
 
-import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -14,41 +13,34 @@ import com.impulse.afterdarrk.Player;
 import com.impulse.afterdarrk.Utils.CartesianCoords;
 
 public class ActionBar extends DisplayObj {
-    private final int top;
-    private final int margin;
+    public static final int MARGIN = 50;
 
-    public ActionBar(Player player, Context context) {
+    public ActionBar(Player player, CartesianCoords position, DisplayObj parent) {
+        super(position, parent);
         sortKey = 1;
 
         int buttonHeight = Main.height / 6;
-
-        margin = buttonHeight / 6;
-        top = Main.height - buttonHeight - margin * 2;
         int width = Main.width / 10;
 
         CartesianCoords size = new CartesianCoords(width, buttonHeight);
 
-        createActionButtons(player, context, width, size);
-        createDirectionButtons(player, context, width, size);
+        createActionButtons(player, width, size);
+        createDirectionButtons(player, width, size);
     }
 
-    private void createActionButtons(Player player, Context activityContext, int width, CartesianCoords size) {
-        int buttonTop = top + margin;
-
-        ActionButton fireButton = new ActionButton(player, new CartesianCoords(width/2, buttonTop), size, ActionType.FIRE, activityContext);
-        ActionButton iceButton = new ActionButton(player, new CartesianCoords((width * 7)/4, buttonTop), size, ActionType.ICE, activityContext);
-        ActionButton lightningButton = new ActionButton(player, new CartesianCoords(width * 3, buttonTop), size, ActionType.LIGHTNING, activityContext);
+    private void createActionButtons(Player player, int width, CartesianCoords size) {
+        ActionButton fireButton = new ActionButton(player, size, ActionType.FIRE, new CartesianCoords(width/2, MARGIN), this);
+        ActionButton iceButton = new ActionButton(player, size, ActionType.ICE,  new CartesianCoords((width * 7)/4, MARGIN), this);
+        ActionButton lightningButton = new ActionButton(player, size, ActionType.LIGHTNING, new CartesianCoords(width * 3, MARGIN), this);
 
         addObj(fireButton);
         addObj(iceButton);
         addObj(lightningButton);
     }
 
-    private void createDirectionButtons(Player player, Context activityContext, int width, CartesianCoords size) {
-        int buttonTop = top + margin;
-
-        DirectionButton leftButton = new DirectionButton(player, new CartesianCoords(width * 7, buttonTop), size, DirectionType.LEFT, activityContext);
-        DirectionButton rightButton = new DirectionButton(player, new CartesianCoords((width * 17)/2, buttonTop), size, DirectionType.RIGHT, activityContext);
+    private void createDirectionButtons(Player player, int width, CartesianCoords size) {
+        DirectionButton leftButton = new DirectionButton(player, size, DirectionType.LEFT, new CartesianCoords(width * 7, MARGIN), this);
+        DirectionButton rightButton = new DirectionButton(player, size, DirectionType.RIGHT, new CartesianCoords((width * 17)/2, MARGIN), this);
 
         addObj(leftButton);
         addObj(rightButton);
@@ -62,8 +54,13 @@ public class ActionBar extends DisplayObj {
         Paint borderPaint = new Paint();
         borderPaint.setColor(Color.YELLOW);
 
-        Rect background = new Rect(0, top, Main.width, Main.height);
-        Rect border = new Rect(0, top - 10, Main.width, top);
+        CartesianCoords position = getAbsolutePosition();
+
+        int left = (int) Math.round(position.getX());
+        int top = (int) Math.round(position.getY());
+
+        Rect background = new Rect(left, top, Main.width, Main.height);
+        Rect border = new Rect(left, top - 10, Main.width, top);
 
         canvas.drawRect(background, backgroundPaint);
         canvas.drawRect(border, borderPaint);

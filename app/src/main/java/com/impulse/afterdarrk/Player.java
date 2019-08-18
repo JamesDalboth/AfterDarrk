@@ -10,18 +10,18 @@ import android.view.View;
 import com.impulse.afterdarrk.Actions.ActionType;
 import com.impulse.afterdarrk.Display.DisplayObj;
 import com.impulse.afterdarrk.Enemy.Enemy;
+import com.impulse.afterdarrk.Utils.CartesianCoords;
 
 public class Player extends DisplayObj {
     private Enemy target;
-    private Image image;
     private boolean alive;
 
     public final int radius;
 
-    public Player(Image image, int radius) {
+    public Player(CartesianCoords position) {
+        super(position, null);
         this.target = null;
-        this.image = image;
-        this.radius = radius;
+        this.radius = Main.width/20;
 
         alive = true;
     }
@@ -57,7 +57,13 @@ public class Player extends DisplayObj {
     public void draw(Canvas canvas) {
         Paint paint = new Paint();
         paint.setColor(Color.RED);
-        canvas.drawCircle((Main.width / 2) , (Main.height / 2) - (radius/2), radius, paint);
+
+        CartesianCoords position = getAbsolutePosition();
+
+        int x = (int) Math.round(position.getX());
+        int y = (int) Math.round(position.getY());
+
+        canvas.drawCircle(x, y - (radius/2), radius, paint);
     }
 
     // Player should not be clickable

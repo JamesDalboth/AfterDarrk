@@ -14,11 +14,40 @@ import java.util.List;
 
 abstract public class DisplayObj extends Sortable {
 
-    protected List<DisplayObj> objs = new ArrayList<>();
-    private CartesianCoords position;
+    private final List<DisplayObj> objs;
+    private CartesianCoords relativePosition;
+    protected final DisplayObj parent;
+
+    protected DisplayObj(CartesianCoords relativePosition, DisplayObj parent) {
+        this.objs = new ArrayList<>();
+        this.relativePosition = relativePosition;
+        this.parent = parent;
+    }
+
+    protected CartesianCoords getRelativePosition() {
+        return relativePosition;
+    }
+
+    protected void setRelativePosition(CartesianCoords relativePosition) {
+        this.relativePosition = relativePosition;
+    }
+
+    protected CartesianCoords getAbsolutePosition() {
+        CartesianCoords absolutePosition = relativePosition;
+
+        if (parent != null) {
+            absolutePosition = absolutePosition.addOff(parent.getAbsolutePosition());
+        }
+
+        return absolutePosition;
+    }
 
     protected void addObj(DisplayObj obj) {
         objs.add(obj);
+    }
+
+    protected void removeObj(DisplayObj obj) {
+        objs.remove(obj);
     }
 
     abstract public void draw(Canvas canvas);

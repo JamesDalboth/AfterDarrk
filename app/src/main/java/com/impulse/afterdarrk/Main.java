@@ -1,16 +1,17 @@
 package com.impulse.afterdarrk;
 
-import android.media.Image;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 
 import com.impulse.afterdarrk.Actions.ActionBar;
+import com.impulse.afterdarrk.Display.BitmapLoader;
 import com.impulse.afterdarrk.Display.Display;
 import com.impulse.afterdarrk.Enemy.Enemy;
 import com.impulse.afterdarrk.Enemy.Generators.BlackAngelGenerator;
 import com.impulse.afterdarrk.Enemy.Generators.DarkBlobGenerator;
 import com.impulse.afterdarrk.Enemy.Generators.ShadowHandGenerator;
+import com.impulse.afterdarrk.Utils.CartesianCoords;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -36,6 +37,7 @@ public class Main extends AppCompatActivity {
     private Display display;
 
     public static int width, height;
+    public static CartesianCoords center;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +62,8 @@ public class Main extends AppCompatActivity {
     private void init() {
         enemyList = new ArrayList<>();
 
+        BitmapLoader.getInstance().load(this);
+
         display = new Display(this);
 
         initPlayerObj();
@@ -70,21 +74,18 @@ public class Main extends AppCompatActivity {
     }
 
     private void initButtons() {
-        ActionBar actionBar = new ActionBar(player, this);
+        ActionBar actionBar = new ActionBar(player, new CartesianCoords(0, height * 5 / 6 - ActionBar.MARGIN * 2),null);
         display.addObj(actionBar);
     }
 
     private void initEnemyGenerators() {
-        blackAngleGen = new BlackAngelGenerator(player, this);
-        darkBlobGen = new DarkBlobGenerator(player, this);
-        shadowHandGenerator = new ShadowHandGenerator(player, this);
+        blackAngleGen = new BlackAngelGenerator(player);
+        darkBlobGen = new DarkBlobGenerator(player);
+        shadowHandGenerator = new ShadowHandGenerator(player);
     }
 
     private void initPlayerObj() {
-        int playerSize = width/20;
-
-        Image playerImg = null;
-        player = new Player(playerImg, playerSize);
+        player = new Player(new CartesianCoords(width/2, height/2));
         display.addObj(player);
     }
 
@@ -93,15 +94,18 @@ public class Main extends AppCompatActivity {
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         height = displayMetrics.heightPixels;
         width = displayMetrics.widthPixels;
+
+        center = new CartesianCoords(width/2, height/2);
+        System.out.println("Center: " + center);
     }
 
     void gameLoop() {
         if (!player.isAlive()) {
             System.exit(0);
         }
+
         update();
         display.invalidate();
-
     }
 
     private void update() {
@@ -120,5 +124,4 @@ public class Main extends AppCompatActivity {
         darkBlobGen.generate(enemyList, display);
         shadowHandGenerator.generate(enemyList, display);
     }
-
 }
