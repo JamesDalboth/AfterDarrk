@@ -1,15 +1,12 @@
 package com.impulse.afterdarrk;
 
-import android.content.Context;
-import android.media.Image;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 
-import com.impulse.afterdarrk.Actions.Action;
 import com.impulse.afterdarrk.Actions.ActionBar;
-import com.impulse.afterdarrk.Actions.ActionButton;
-import com.impulse.afterdarrk.Actions.ActionType;
+import com.impulse.afterdarrk.Display.BitmapLoader;
+import com.impulse.afterdarrk.Display.Display;
 import com.impulse.afterdarrk.Enemy.Enemy;
 import com.impulse.afterdarrk.Enemy.Generators.BlackAngelGenerator;
 import com.impulse.afterdarrk.Enemy.Generators.DarkBlobGenerator;
@@ -28,7 +25,6 @@ public class Main extends AppCompatActivity {
         System.loadLibrary("native-lib");
     }
 
-
     // Generators for different enemies
     private BlackAngelGenerator blackAngleGen;
     private DarkBlobGenerator darkBlobGen;
@@ -41,8 +37,7 @@ public class Main extends AppCompatActivity {
     private Display display;
 
     public static int width, height;
-
-    public Context context;
+    public static CartesianCoords center;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,8 +46,6 @@ public class Main extends AppCompatActivity {
         // Init Code
         // To get width and height from the screen on the device
         calcScreenSize();
-
-        context = this;
 
         init();
 
@@ -67,13 +60,22 @@ public class Main extends AppCompatActivity {
     }
 
     private void init() {
-        int playerSize = width/20;
-
-        initPlayerObj(playerSize);
         enemyList = new ArrayList<>();
-        ActionBar actionBar = new ActionBar(player, context);
-        initDisplayObj(actionBar);
+
+        BitmapLoader.getInstance().load(this);
+
+        display = new Display(this);
+
+        initPlayerObj();
+        initButtons();
         initEnemyGenerators();
+
+        setContentView(display);
+    }
+
+    private void initButtons() {
+        ActionBar actionBar = new ActionBar(player, new CartesianCoords(0, height * 5 / 6 - ActionBar.MARGIN * 2),null);
+        display.addObj(actionBar);
     }
 
     private void initEnemyGenerators() {
@@ -82,16 +84,9 @@ public class Main extends AppCompatActivity {
         shadowHandGenerator = new ShadowHandGenerator(player);
     }
 
-    private void initDisplayObj(ActionBar actionBar) {
-        display = new Display(this);
+    private void initPlayerObj() {
+        player = new Player(new CartesianCoords(width/2, height/2));
         display.addObj(player);
-        display.addObj(actionBar);
-        setContentView(display);
-    }
-
-    private void initPlayerObj(int playerSize) {
-        Image playerImg = null;
-        player = new Player(playerImg, playerSize);
     }
 
     private void calcScreenSize() {
@@ -99,15 +94,18 @@ public class Main extends AppCompatActivity {
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         height = displayMetrics.heightPixels;
         width = displayMetrics.widthPixels;
+
+        center = new CartesianCoords(width/2, height/2);
+        System.out.println("Center: " + center);
     }
 
     void gameLoop() {
         if (!player.isAlive()) {
             System.exit(0);
         }
+
         update();
         display.invalidate();
-
     }
 
     private void update() {
@@ -115,7 +113,7 @@ public class Main extends AppCompatActivity {
             Enemy enemy = iterator.next();
             if (enemy.isDead()) {
                 iterator.remove();
-                display.remove(enemy);
+                display.removeObj(enemy);
                 continue;
             }
             enemy.update();
@@ -126,5 +124,4 @@ public class Main extends AppCompatActivity {
         darkBlobGen.generate(enemyList, display);
         shadowHandGenerator.generate(enemyList, display);
     }
-
 }

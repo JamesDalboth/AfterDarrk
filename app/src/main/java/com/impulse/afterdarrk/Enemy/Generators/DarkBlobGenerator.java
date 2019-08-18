@@ -8,7 +8,6 @@ public class DarkBlobGenerator extends EnemyGenerator {
 
     public DarkBlobGenerator(Player player) {
         this.player = player;
-        img = null;
     }
 
     @Override
@@ -18,8 +17,9 @@ public class DarkBlobGenerator extends EnemyGenerator {
 
     @Override
     protected Enemy makeEnemy(int size) {
+        System.out.println("Create Dark Blob");
         double angle = Math.random() * Math.PI * 2;
-        Enemy enemy = new DarkBlob(img, player, angle, size);
+        Enemy enemy = new DarkBlob(player, angle, size, null);
         return enemy;
     }
 

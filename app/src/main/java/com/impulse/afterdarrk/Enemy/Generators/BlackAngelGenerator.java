@@ -17,7 +17,8 @@ public class BlackAngelGenerator extends EnemyGenerator {
 
     @Override
     protected Enemy makeEnemy(int size) {
+        System.out.println("Create black angel");
         double angle = Math.random() * Math.PI * 2;
-        return new BlackAngel(img, player, angle, size);
+        return new BlackAngel(player, angle, size, null);
     }
 }

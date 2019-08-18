@@ -3,14 +3,12 @@ package com.impulse.afterdarrk.Enemy;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Rect;
-import android.media.Image;
 import android.view.MotionEvent;
 import android.view.View;
 
 import com.impulse.afterdarrk.Actions.ActionList;
 import com.impulse.afterdarrk.Actions.ActionType;
-import com.impulse.afterdarrk.DisplayObj;
+import com.impulse.afterdarrk.Display.DisplayObj;
 import com.impulse.afterdarrk.Main;
 import com.impulse.afterdarrk.Player;
 import com.impulse.afterdarrk.Utils.CartesianCoords;
@@ -19,40 +17,31 @@ import com.impulse.afterdarrk.Utils.PolarCoords;
 import java.util.List;
 
 public abstract class Enemy extends DisplayObj {
-    // Initial Distance for enemies to spawn at
-    static int INIT_DISTANCE = 1000;
+    private static int INIT_DISTANCE = 1000;
 
-    //Number of enemies spawned in at the moment
     public static int NUM_ENEMIES = 0;
 
-    private static int ACTION_WIDTH = 50;
-
-    protected Player player;
-    private EnemyType type;
-    private Image img;
     private ActionList actions;
     private boolean dead;
     private final int radius;
-
     private int speed;
-    private PolarCoords polar;
 
+    protected Player player;
 
-    public Enemy(EnemyType type, Image img, int speed, Player player,
-                 double angle, ActionList actions, int size) {
+    public Enemy(int speed, Player player, double angle, List<ActionType> actions, int size,
+                 DisplayObj parent) {
+        super(new PolarCoords(INIT_DISTANCE, angle).toCartesian(Main.center), parent);
+
         NUM_ENEMIES++;
-
-        this.type = type;
-        this.img = img;
-
-        this.actions = actions;
 
         this.dead = false;
         this.speed = speed;
         this.player = player;
-        this.polar = new PolarCoords(INIT_DISTANCE, angle);
-
         this.radius = size;
+
+        this.actions = new ActionList(actions, new CartesianCoords(0, -size*2), this);
+
+        addObj(this.actions);
     }
 
     public boolean attack(ActionType type) {
@@ -72,9 +61,12 @@ public abstract class Enemy extends DisplayObj {
         dead = true;
     }
 
-    private void move(){
-        polar = polar.deltaRadius(-speed);
+    private void move() {
+        PolarCoords polar = getRelativePosition().toPolar(Main.center).deltaRadius(-speed);
+        setRelativePosition(polar.toCartesian(Main.center));
+
         if (polar.getRadius() < 100) {
+            System.out.println("Player killed");
             player.die();
         }
     }
@@ -83,10 +75,15 @@ public abstract class Enemy extends DisplayObj {
         move();
     }
 
-    public void touch(View v, MotionEvent event) {
-        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+    public boolean touch(View v, MotionEvent event) {
+        CartesianCoords pos = new CartesianCoords(event.getX(), event.getY());
+
+        if (pos.toPolar(getAbsolutePosition()).getRadius() < radius) {
             player.setEnemy(this);
+            return true;
         }
+
+        return false;
     }
 
     public void draw(Canvas canvas) {
@@ -98,49 +95,7 @@ public abstract class Enemy extends DisplayObj {
             paint.setColor(Color.BLACK);
         }
 
-        canvas.drawCircle(Math.round(getPosition().getX()),
-                                     Math.round(getPosition().getY() - (radius /2)), radius, paint);
-
-        drawActions(canvas);
-    }
-
-    private void drawActions(Canvas canvas) {
-        Paint paint = new Paint();
-
-        List<ActionType> remaining = actions.remaining();
-
-        double width = remaining.size() * ACTION_WIDTH + (remaining.size () - 1) * ACTION_WIDTH/2;
-
-        double left = getPosition().getX() - width/2;
-
-        int rectTop = (int) Math.floor(getPosition().getY()) - radius - ACTION_WIDTH * 2;
-
-        for (int i = 0; i < remaining.size(); i++) {
-            switch (remaining.get(i)) {
-                case FIRE:
-                    paint.setColor(Color.RED);
-                    break;
-                case ICE:
-                    paint.setColor(Color.BLUE);
-                    break;
-                case LIGHTNING:
-                    paint.setColor(Color.BLACK);
-                    break;
-            }
-
-            int rectLeft = (int) Math.round(left + (i * ACTION_WIDTH * 3/2));
-
-            Rect actionRect = new Rect(rectLeft, rectTop, rectLeft + ACTION_WIDTH, rectTop + ACTION_WIDTH);
-            canvas.drawRect(actionRect, paint);
-        }
-    }
-
-    private CartesianCoords getPosition() {
-        return polar.toCartesian().addOff(new CartesianCoords(Main.width/2, Main.height/2));
-    }
-
-    @Override
-    public boolean isHit(CartesianCoords pos) {
-        return (pos.subOff(getPosition()).toPolar().getRadius() < radius);
+        canvas.drawCircle(Math.round(getAbsolutePosition().getX()),
+                Math.round(getAbsolutePosition().getY() - (radius /2)), radius, paint);
     }
 }

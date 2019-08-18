@@ -19,7 +19,7 @@ public final class PolarCoords {
 
     @Override
     public String toString() {
-        return "Radius, Theta : " + "(" + radius + "," + theta + ")";
+        return "Radius, Theta : " + "(" + radius + ", " + theta + ")";
     }
 
     @Override
@@ -31,9 +31,9 @@ public final class PolarCoords {
         return new PolarCoords(radius + delta, theta);
     }
 
-    public CartesianCoords toCartesian() {
+    public CartesianCoords toCartesian(CartesianCoords origin) {
         double x = radius * Math.cos(theta);
         double y = radius * Math.sin(theta);
-        return new CartesianCoords(x, y);
+        return new CartesianCoords(x, y).addOff(origin);
     }
 }
