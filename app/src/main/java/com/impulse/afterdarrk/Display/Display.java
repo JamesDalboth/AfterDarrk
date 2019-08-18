@@ -1,12 +1,10 @@
-package com.impulse.afterdarrk;
+package com.impulse.afterdarrk.Display;
 
 import android.content.Context;
 import android.graphics.Canvas;
 import android.view.MotionEvent;
 import android.view.View;
 
-import com.impulse.afterdarrk.Enemy.Enemy;
-import com.impulse.afterdarrk.Utils.CartesianCoords;
 import com.impulse.afterdarrk.Utils.InsertionSort;
 
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package com.impulse.afterdarrk;
+package com.impulse.afterdarrk.Display;
 
 import android.graphics.Canvas;
 import android.view.MotionEvent;

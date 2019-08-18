@@ -8,8 +8,8 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import com.impulse.afterdarrk.Actions.ActionType;
+import com.impulse.afterdarrk.Display.DisplayObj;
 import com.impulse.afterdarrk.Enemy.Enemy;
-import com.impulse.afterdarrk.Utils.CartesianCoords;
 
 public class Player extends DisplayObj {
     private Enemy target;

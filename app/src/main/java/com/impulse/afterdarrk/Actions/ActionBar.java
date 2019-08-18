@@ -8,13 +8,10 @@ import android.graphics.Rect;
 import android.view.MotionEvent;
 import android.view.View;
 
-import com.impulse.afterdarrk.DisplayObj;
+import com.impulse.afterdarrk.Display.DisplayObj;
 import com.impulse.afterdarrk.Main;
 import com.impulse.afterdarrk.Player;
 import com.impulse.afterdarrk.Utils.CartesianCoords;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class ActionBar extends DisplayObj {
     private final int top;

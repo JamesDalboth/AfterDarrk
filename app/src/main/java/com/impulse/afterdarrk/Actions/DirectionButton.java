@@ -4,13 +4,11 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Paint;
 import android.graphics.Rect;
 import android.view.MotionEvent;
 import android.view.View;
 
-import com.impulse.afterdarrk.DisplayObj;
-import com.impulse.afterdarrk.Main;
+import com.impulse.afterdarrk.Display.DisplayObj;
 import com.impulse.afterdarrk.Player;
 import com.impulse.afterdarrk.R;
 import com.impulse.afterdarrk.Utils.CartesianCoords;

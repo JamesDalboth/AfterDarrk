@@ -3,7 +3,7 @@ package com.impulse.afterdarrk.Enemy.Generators;
 import android.content.Context;
 import android.media.Image;
 
-import com.impulse.afterdarrk.Display;
+import com.impulse.afterdarrk.Display.Display;
 import com.impulse.afterdarrk.Enemy.Enemy;
 import com.impulse.afterdarrk.Player;
 
