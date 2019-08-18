@@ -15,23 +15,38 @@ import java.util.List;
 abstract public class DisplayObj extends Sortable {
 
     protected List<DisplayObj> objs = new ArrayList<>();
+    private CartesianCoords position;
 
-    public void draw(Canvas canvas) {
+    protected void addObj(DisplayObj obj) {
+        objs.add(obj);
+    }
+
+    abstract public void draw(Canvas canvas);
+
+    void drawObject(Canvas canvas) {
+        draw(canvas);
+
         InsertionSort<DisplayObj> insertionSort = new InsertionSort<>();
 
         insertionSort.insertionSort(objs);
 
         for (Iterator<DisplayObj> iterator = objs.iterator(); iterator.hasNext();) {
             DisplayObj obj = iterator.next();
-            obj.draw(canvas);
+            obj.drawObject(canvas);
         }
     }
 
-    public boolean touch(View view, MotionEvent event) {
+    abstract public boolean touch(View view, MotionEvent event);
+
+    boolean touchObject(View view, MotionEvent event) {
+        if (touch(view, event)) {
+            return true;
+        }
+
         for (Iterator<DisplayObj> iterator = objs.iterator(); iterator.hasNext();) {
             DisplayObj obj = iterator.next();
 
-            if (obj.touch(view, event)) {
+            if (obj.touchObject(view, event)) {
                 return true;
             }
         }

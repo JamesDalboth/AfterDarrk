@@ -17,10 +17,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ActionBar extends DisplayObj {
-
-    private List<ActionButton> actionButtons;
-    private List<DirectionButton> directionButtons;
-
     private final int top;
     private final int margin;
 
@@ -32,11 +28,6 @@ public class ActionBar extends DisplayObj {
         margin = buttonHeight / 6;
         top = Main.height - buttonHeight - margin * 2;
         int width = Main.width / 10;
-
-        System.out.println("Button height: " + buttonHeight);
-        System.out.println("Margin: " + margin);
-        System.out.println("Top: " + top);
-        System.out.println("Main.Height: " + Main.height);
 
         CartesianCoords size = new CartesianCoords(width, buttonHeight);
 
@@ -51,11 +42,9 @@ public class ActionBar extends DisplayObj {
         ActionButton iceButton = new ActionButton(player, new CartesianCoords((width * 7)/4, buttonTop), size, ActionType.ICE, activityContext);
         ActionButton lightningButton = new ActionButton(player, new CartesianCoords(width * 3, buttonTop), size, ActionType.LIGHTNING, activityContext);
 
-        actionButtons = new ArrayList<>();
-
-        actionButtons.add(fireButton);
-        actionButtons.add(iceButton);
-        actionButtons.add(lightningButton);
+        addObj(fireButton);
+        addObj(iceButton);
+        addObj(lightningButton);
     }
 
     private void createDirectionButtons(Player player, Context activityContext, int width, CartesianCoords size) {
@@ -64,10 +53,8 @@ public class ActionBar extends DisplayObj {
         DirectionButton leftButton = new DirectionButton(player, new CartesianCoords(width * 7, buttonTop), size, DirectionType.LEFT, activityContext);
         DirectionButton rightButton = new DirectionButton(player, new CartesianCoords((width * 17)/2, buttonTop), size, DirectionType.RIGHT, activityContext);
 
-        directionButtons = new ArrayList<>();
-
-        directionButtons.add(leftButton);
-        directionButtons.add(rightButton);
+        addObj(leftButton);
+        addObj(rightButton);
     }
 
     @Override
@@ -83,24 +70,11 @@ public class ActionBar extends DisplayObj {
 
         canvas.drawRect(background, backgroundPaint);
         canvas.drawRect(border, borderPaint);
-
-        for (ActionButton actionButton : actionButtons) {
-            actionButton.draw(canvas);
-        }
-
-        for (DirectionButton directionButton : directionButtons) {
-            directionButton.draw(canvas);
-        }
     }
 
+    // Action bar is not touchable
     @Override
     public boolean touch(View view, MotionEvent event) {
-        for (ActionButton actionButton : actionButtons) {
-            if (actionButton.touch(view, event)) {
-                return true;
-            }
-        }
-
         return false;
     }
 }
