@@ -27,8 +27,8 @@ public class Display extends View implements View.OnTouchListener {
         objs.add(obj);
     }
 
-    public void remove(Enemy enemy) {
-        objs.remove(enemy);
+    public void removeObj(DisplayObj obj) {
+        objs.remove(obj);
     }
 
     @Override
@@ -50,7 +50,7 @@ public class Display extends View implements View.OnTouchListener {
             return false;
         }
 
-        // Need to use iterator as by touching something we could remove something from this list.
+        // Need to use iterator as by touching something we could removeObj something from this list.
         for (Iterator<DisplayObj> iterator = objs.iterator(); iterator.hasNext();) {
             DisplayObj obj = iterator.next();
 

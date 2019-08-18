@@ -1,20 +1,15 @@
 package com.impulse.afterdarrk;
 
-import android.content.Context;
 import android.media.Image;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 
-import com.impulse.afterdarrk.Actions.Action;
 import com.impulse.afterdarrk.Actions.ActionBar;
-import com.impulse.afterdarrk.Actions.ActionButton;
-import com.impulse.afterdarrk.Actions.ActionType;
 import com.impulse.afterdarrk.Enemy.Enemy;
 import com.impulse.afterdarrk.Enemy.Generators.BlackAngelGenerator;
 import com.impulse.afterdarrk.Enemy.Generators.DarkBlobGenerator;
 import com.impulse.afterdarrk.Enemy.Generators.ShadowHandGenerator;
-import com.impulse.afterdarrk.Utils.CartesianCoords;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -113,7 +108,7 @@ public class Main extends AppCompatActivity {
             Enemy enemy = iterator.next();
             if (enemy.isDead()) {
                 iterator.remove();
-                display.remove(enemy);
+                display.removeObj(enemy);
                 continue;
             }
             enemy.update();
