@@ -17,14 +17,8 @@ public final class CartesianCoords {
         return y;
     }
 
-    @Override
-    public String toString() {
-        return "(X, Y) : " + "(" + x + "," + y + ")";
-    }
-
-    @Override
-    public int hashCode() {
-        return toString().hashCode();
+    public PolarCoords toPolar() {
+        return toPolar(new CartesianCoords(0, 0));
     }
 
     public PolarCoords toPolar(CartesianCoords origin) {
@@ -40,5 +34,29 @@ public final class CartesianCoords {
 
     public CartesianCoords subOff(CartesianCoords cartesianCoords) {
         return new CartesianCoords(x - cartesianCoords.getX(), y - cartesianCoords.getY());
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof CartesianCoords)) {
+            return false;
+        }
+
+        CartesianCoords other = (CartesianCoords) obj;
+
+        double xOffset = Math.abs(other.x - this.x);
+        double yOffset = Math.abs(other.y - this.y);
+
+        return xOffset < 0.005 && yOffset < 0.005;
+    }
+
+    @Override
+    public String toString() {
+        return "(X, Y) : " + "(" + x + ", " + y + ")";
+    }
+
+    @Override
+    public int hashCode() {
+        return toString().hashCode();
     }
 }
