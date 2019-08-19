@@ -34,7 +34,9 @@ public class ActionIcon extends DisplayObj {
                 break;
         }
 
-        image = Bitmap.createScaledBitmap(image, ACTION_WIDTH, ACTION_WIDTH, true);
+        if (image != null) {
+            image = Bitmap.createScaledBitmap(image, ACTION_WIDTH, ACTION_WIDTH, true);
+        }
     }
 
     ActionType getActionType() {
