@@ -1,15 +1,12 @@
 package com.impulse.afterdarrk;
 
-import android.content.Context;
-import android.media.Image;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 
-import com.impulse.afterdarrk.Actions.Action;
 import com.impulse.afterdarrk.Actions.ActionBar;
-import com.impulse.afterdarrk.Actions.ActionButton;
-import com.impulse.afterdarrk.Actions.ActionType;
+import com.impulse.afterdarrk.Display.BitmapLoader;
+import com.impulse.afterdarrk.Display.Display;
 import com.impulse.afterdarrk.Enemy.Enemy;
 import com.impulse.afterdarrk.Enemy.Generators.BlackAngelGenerator;
 import com.impulse.afterdarrk.Enemy.Generators.DarkBlobGenerator;
@@ -23,61 +20,34 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class Main extends AppCompatActivity {
-    public static int width, height; // Width and height of screen
-
-    public Context context;
-
     // Used to load the 'native-lib' library on application startup.
     static {
         System.loadLibrary("native-lib");
     }
 
-    List<Enemy> enemyList; // List of enemies alive
-
-    Player player; // Player control object
-
     // Generators for different enemies
     private BlackAngelGenerator blackAngleGen;
     private DarkBlobGenerator darkBlobGen;
     private ShadowHandGenerator shadowHandGenerator;
+    private List<Enemy> enemyList;
+
+    private Player player;
 
     // Display object
     private Display display;
+
+    public static int width, height;
+    public static CartesianCoords center;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         // Init Code
-        //To get width and height from the screen on the device
-        DisplayMetrics displayMetrics = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        height = displayMetrics.heightPixels - 48;
-        width = displayMetrics.widthPixels;
+        // To get width and height from the screen on the device
+        calcScreenSize();
 
-        context = Main.this;
-
-        int playerSize = width/20;
-
-        // Init player obj
-        Image playerImg = null;
-        player = new Player(playerImg, playerSize);
-
-        // Init enemy list
-        enemyList = new ArrayList<>();
-
-        ActionBar actionBar = new ActionBar(player, context);
-
-        // Init display obj
-        display = new Display(this);
-        display.addObj(player);
-        display.addObj(actionBar);
-        setContentView(display);
-
-        // Init enemy generators
-        blackAngleGen = new BlackAngelGenerator(player);
-        darkBlobGen = new DarkBlobGenerator(player);
-        shadowHandGenerator = new ShadowHandGenerator(player);
+        init();
 
         // Run game
         Timer timer = new Timer();
@@ -89,13 +59,53 @@ public class Main extends AppCompatActivity {
         }, 10, 10);
     }
 
+    private void init() {
+        enemyList = new ArrayList<>();
+
+        BitmapLoader.getInstance().load(this);
+
+        display = new Display(this);
+
+        initPlayerObj();
+        initButtons();
+        initEnemyGenerators();
+
+        setContentView(display);
+    }
+
+    private void initButtons() {
+        ActionBar actionBar = new ActionBar(player, new CartesianCoords(0, height * 5 / 6 - ActionBar.MARGIN * 2),null);
+        display.addObj(actionBar);
+    }
+
+    private void initEnemyGenerators() {
+        blackAngleGen = new BlackAngelGenerator(player);
+        darkBlobGen = new DarkBlobGenerator(player);
+        shadowHandGenerator = new ShadowHandGenerator(player);
+    }
+
+    private void initPlayerObj() {
+        player = new Player(new CartesianCoords(width/2, height/2));
+        display.addObj(player);
+    }
+
+    private void calcScreenSize() {
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        height = displayMetrics.heightPixels;
+        width = displayMetrics.widthPixels;
+
+        center = new CartesianCoords(width/2, height/2);
+        System.out.println("Center: " + center);
+    }
+
     void gameLoop() {
         if (!player.isAlive()) {
             System.exit(0);
         }
+
         update();
         display.invalidate();
-
     }
 
     private void update() {
@@ -103,7 +113,7 @@ public class Main extends AppCompatActivity {
             Enemy enemy = iterator.next();
             if (enemy.isDead()) {
                 iterator.remove();
-                display.remove(enemy);
+                display.removeObj(enemy);
                 continue;
             }
             enemy.update();
@@ -114,5 +124,4 @@ public class Main extends AppCompatActivity {
         darkBlobGen.generate(enemyList, display);
         shadowHandGenerator.generate(enemyList, display);
     }
-
 }

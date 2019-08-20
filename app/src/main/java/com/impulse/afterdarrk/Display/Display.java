@@ -1,12 +1,10 @@
-package com.impulse.afterdarrk;
+package com.impulse.afterdarrk.Display;
 
 import android.content.Context;
 import android.graphics.Canvas;
 import android.view.MotionEvent;
 import android.view.View;
 
-import com.impulse.afterdarrk.Enemy.Enemy;
-import com.impulse.afterdarrk.Utils.CartesianCoords;
 import com.impulse.afterdarrk.Utils.InsertionSort;
 
 import java.util.ArrayList;
@@ -27,15 +25,20 @@ public class Display extends View implements View.OnTouchListener {
         objs.add(obj);
     }
 
+    public void removeObj(DisplayObj obj) {
+        objs.remove(obj);
+    }
+
     @Override
     public void draw(Canvas canvas) {
+        super.draw(canvas);
         InsertionSort<DisplayObj> insertionSort = new InsertionSort<>();
 
         insertionSort.insertionSort(objs);
 
-        super.draw(canvas);
-        for (DisplayObj obj : objs) {
-            obj.draw(canvas);
+        for (Iterator<DisplayObj> iterator = objs.iterator(); iterator.hasNext();) {
+            DisplayObj obj = iterator.next();
+            obj.drawObject(canvas);
         }
     }
 
@@ -45,21 +48,15 @@ public class Display extends View implements View.OnTouchListener {
             return false;
         }
 
-        System.out.println("Display Clicked");
-
+        // Need to use iterator as by touching something we could removeObj something from this list.
         for (Iterator<DisplayObj> iterator = objs.iterator(); iterator.hasNext();) {
             DisplayObj obj = iterator.next();
 
-            if (obj.isHit(new CartesianCoords(event.getX(), event.getY()))) {
-                obj.touch(v, event);
+            if (obj.touchObject(v, event)) {
                 return true;
             }
         }
 
         return false;
-    }
-
-    public void remove(Enemy enemy) {
-        objs.remove(enemy);
     }
 }

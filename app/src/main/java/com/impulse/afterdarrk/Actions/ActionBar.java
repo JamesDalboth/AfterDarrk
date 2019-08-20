@@ -1,6 +1,5 @@
 package com.impulse.afterdarrk.Actions;
 
-import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -8,93 +7,69 @@ import android.graphics.Rect;
 import android.view.MotionEvent;
 import android.view.View;
 
-import com.impulse.afterdarrk.DisplayObj;
+import com.impulse.afterdarrk.Display.DisplayObj;
 import com.impulse.afterdarrk.Main;
 import com.impulse.afterdarrk.Player;
 import com.impulse.afterdarrk.Utils.CartesianCoords;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class ActionBar extends DisplayObj {
+    public static final int MARGIN = 50;
 
-    private List<ActionButton> actionButtons;
-    private List<DirectionButton> directionButtons;
-
-    private final int top;
-    private final int height;
-
-    private Context activityContext;
-
-    public ActionBar(Player player, Context context) {
-
-        activityContext = context;
-
+    public ActionBar(Player player, CartesianCoords position, DisplayObj parent) {
+        super(position, parent);
         sortKey = 1;
 
-        height = Main.height / 6;
-
-        top = Main.height - (height/5)*6;
-
-        System.out.println(top);
-
+        int buttonHeight = Main.height / 6;
         int width = Main.width / 10;
 
-        CartesianCoords size = new CartesianCoords(width, height);
+        CartesianCoords size = new CartesianCoords(width, buttonHeight);
 
-        ActionButton fireButton = new ActionButton(player, new CartesianCoords(width/2, top), size, ActionType.FIRE, activityContext);
-        ActionButton iceButton = new ActionButton(player, new CartesianCoords((width * 7)/4, top), size, ActionType.ICE, activityContext);
-        ActionButton lightningButton = new ActionButton(player, new CartesianCoords(width * 3, top), size, ActionType.LIGHTNING, activityContext);
+        createActionButtons(player, width, size);
+        createDirectionButtons(player, width, size);
+    }
 
-        actionButtons = new ArrayList<>();
+    private void createActionButtons(Player player, int width, CartesianCoords size) {
+        ActionButton fireButton = new ActionButton(player, size, ActionType.FIRE, new CartesianCoords(width/2, MARGIN), this);
+        ActionButton iceButton = new ActionButton(player, size, ActionType.ICE,  new CartesianCoords((width * 7)/4, MARGIN), this);
+        ActionButton lightningButton = new ActionButton(player, size, ActionType.LIGHTNING, new CartesianCoords(width * 3, MARGIN), this);
 
-        actionButtons.add(fireButton);
-        actionButtons.add(iceButton);
-        actionButtons.add(lightningButton);
+        addObj(fireButton);
+        addObj(iceButton);
+        addObj(lightningButton);
+    }
 
-        DirectionButton leftButton = new DirectionButton(player, new CartesianCoords(width * 7, top), size, DirectionType.LEFT, activityContext);
-        DirectionButton rightButton = new DirectionButton(player, new CartesianCoords((width * 17)/2, top), size, DirectionType.RIGHT, activityContext);
+    private void createDirectionButtons(Player player, int width, CartesianCoords size) {
+        DirectionButton leftButton = new DirectionButton(player, size, DirectionType.LEFT, new CartesianCoords(width * 7, MARGIN), this);
+        DirectionButton rightButton = new DirectionButton(player, size, DirectionType.RIGHT, new CartesianCoords((width * 17)/2, MARGIN), this);
 
-        directionButtons = new ArrayList<>();
 
-        directionButtons.add(leftButton);
-        directionButtons.add(rightButton);
-
+        addObj(leftButton);
+        addObj(rightButton);
     }
 
     @Override
     public void draw(Canvas canvas) {
+        Paint backgroundPaint = new Paint();
+        backgroundPaint.setColor(Color.BLACK);
 
-        for (ActionButton actionButton : actionButtons) {
-            actionButton.draw(canvas);
-        }
+        Paint borderPaint = new Paint();
+        borderPaint.setColor(Color.YELLOW);
 
-        for (DirectionButton directionButton : directionButtons) {
-            directionButton.draw(canvas);
-        }
+        CartesianCoords position = getAbsolutePosition();
+
+        int left = (int) Math.round(position.getX());
+        int top = (int) Math.round(position.getY());
+
+        Rect background = new Rect(left, top, Main.width, Main.height);
+        Rect border = new Rect(left, top - 10, Main.width, top);
+
+        canvas.drawRect(background, backgroundPaint);
+        canvas.drawRect(border, borderPaint);
     }
 
+    // Action bar is not touchable
     @Override
-    public boolean isHit(CartesianCoords pos) {
-        if (pos.getY() < top) {
-            return false;
-        }
-        for (ActionButton actionButton : actionButtons) {
-            if (actionButton.isHit(pos)) {
-                return true;
-            }
-        }
-
+    public boolean touch(View view, MotionEvent event) {
         return false;
-    }
-
-    @Override
-    public void touch(View view, MotionEvent event) {
-        for (ActionButton actionButton : actionButtons) {
-            if (actionButton.isHit(new CartesianCoords(event.getX(), event.getY()))) {
-                actionButton.touch(view, event);
-                return;
-            }
-        }
     }
 }

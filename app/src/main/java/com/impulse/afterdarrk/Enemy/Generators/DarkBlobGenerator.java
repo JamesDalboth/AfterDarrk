@@ -8,7 +8,6 @@ public class DarkBlobGenerator extends EnemyGenerator {
 
     public DarkBlobGenerator(Player player) {
         this.player = player;
-        img = null;
     }
 
     @Override
