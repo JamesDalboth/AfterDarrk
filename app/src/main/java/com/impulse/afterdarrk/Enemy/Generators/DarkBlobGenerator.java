@@ -18,7 +18,13 @@ public class DarkBlobGenerator extends EnemyGenerator {
 
     @Override
     protected Enemy makeEnemy(int size) {
-        double angle = Math.random() * Math.PI * 2;
+        double direction = Math.random();
+        double angle;
+        if (direction > 0.5) {
+            angle = Math.random() * (((Math.PI * 19)/16) - (Math.PI * 55)/64) + (Math.PI * 55)/64;
+        } else{
+            angle = Math.random() * (((Math.PI * 133)/64) - (Math.PI * 29)/16) + (Math.PI * 29)/16;
+        }
         Enemy enemy = new DarkBlob(img, player, angle, size);
         return enemy;
     }
