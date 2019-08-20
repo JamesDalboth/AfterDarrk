@@ -24,6 +24,6 @@ public class ShadowHandGenerator extends EnemyGenerator {
         } else{
             angle = Math.random() * (((Math.PI * 133)/64) - (Math.PI * 29)/16) + (Math.PI * 29)/16;
         }
-        return new ShadowHand(img, player, angle, size);
+        return new ShadowHand(player, angle, size, null);
     }
 }

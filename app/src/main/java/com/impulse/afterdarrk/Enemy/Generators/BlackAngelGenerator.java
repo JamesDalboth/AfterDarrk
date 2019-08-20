@@ -24,6 +24,6 @@ public class BlackAngelGenerator extends EnemyGenerator {
         } else{
             angle = Math.random() * (((Math.PI * 133)/64) - (Math.PI * 29)/16) + (Math.PI * 29)/16;
         }
-        return new BlackAngel(img, player, angle, size);
+        return new BlackAngel(player, angle, size, null);
     }
 }

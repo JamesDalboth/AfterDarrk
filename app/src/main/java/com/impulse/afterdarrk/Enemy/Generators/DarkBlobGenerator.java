@@ -24,7 +24,7 @@ public class DarkBlobGenerator extends EnemyGenerator {
         } else{
             angle = Math.random() * (((Math.PI * 133)/64) - (Math.PI * 29)/16) + (Math.PI * 29)/16;
         }
-        Enemy enemy = new DarkBlob(img, player, angle, size);
+        Enemy enemy = new DarkBlob(player, angle, size, null);
         return enemy;
     }
 
