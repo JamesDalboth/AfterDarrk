@@ -20,11 +20,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class Main extends AppCompatActivity {
-    // Used to load the 'native-lib' library on application startup.
-    static {
-        System.loadLibrary("native-lib");
-    }
-
     // Generators for different enemies
     private BlackAngelGenerator blackAngleGen;
     private DarkBlobGenerator darkBlobGen;
