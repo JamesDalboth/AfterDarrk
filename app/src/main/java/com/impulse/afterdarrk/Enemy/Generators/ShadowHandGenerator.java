@@ -12,7 +12,11 @@ public class ShadowHandGenerator extends EnemyGenerator {
 
     @Override
     protected double getProb() {
-        return Math.log(enemies_generated + 2) * (5 - Enemy.NUM_ENEMIES) / 5;
+        double boost = 1;
+        if (Enemy.DEAD_ENEMIES != 0) {
+            boost = Enemy.DEAD_ENEMIES;
+        }
+        return (0.0001 / ((double)(Enemy.NUM_ENEMIES))) * boost;
     }
 
     @Override

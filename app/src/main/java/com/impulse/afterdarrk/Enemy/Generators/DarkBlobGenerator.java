@@ -12,7 +12,11 @@ public class DarkBlobGenerator extends EnemyGenerator {
 
     @Override
     protected double getProb() {
-        return Math.log(enemies_generated + 2) * (5 - Enemy.NUM_ENEMIES) / 5;
+        int boost = 1;
+        if(Enemy.DEAD_ENEMIES != 0){
+            boost = Enemy.DEAD_ENEMIES;
+        }
+        return (0.00001/(double)(Enemy.NUM_ENEMIES))*boost;
     }
 
     @Override
@@ -24,8 +28,11 @@ public class DarkBlobGenerator extends EnemyGenerator {
         } else{
             angle = Math.random() * (((Math.PI * 133)/64) - (Math.PI * 29)/16) + (Math.PI * 29)/16;
         }
-        Enemy enemy = new DarkBlob(player, angle, size, null);
-        return enemy;
+        if (!Enemy.BLOB_ALIVE) {
+            Enemy.BLOB_ALIVE = true;
+            return new DarkBlob(player, angle, size, null);
+        }
+        return null;
     }
 
 }

@@ -14,10 +14,12 @@ public abstract class EnemyGenerator {
     public void generate(List<Enemy> enemyList, Display display) {
         double n = Math.random();
         if (n < getProb()) {
-            enemies_generated++;
             Enemy enemy = makeEnemy(player.radius);
-            display.addObj(enemy);
-            enemyList.add(enemy);
+            if(enemy != null) {
+                enemies_generated++;
+                display.addObj(enemy);
+                enemyList.add(enemy);
+            }
         }
     }
 

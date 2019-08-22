@@ -7,6 +7,7 @@ import android.util.DisplayMetrics;
 import com.impulse.afterdarrk.Actions.ActionBar;
 import com.impulse.afterdarrk.Display.BitmapLoader;
 import com.impulse.afterdarrk.Display.Display;
+import com.impulse.afterdarrk.Display.FontLoader;
 import com.impulse.afterdarrk.Enemy.Enemy;
 import com.impulse.afterdarrk.Enemy.Generators.BlackAngelGenerator;
 import com.impulse.afterdarrk.Enemy.Generators.DarkBlobGenerator;
@@ -26,7 +27,7 @@ public class Main extends AppCompatActivity {
     }
 
     // Generators for different enemies
-    private BlackAngelGenerator blackAngleGen;
+    private BlackAngelGenerator blackAngelGen;
     private DarkBlobGenerator darkBlobGen;
     private ShadowHandGenerator shadowHandGenerator;
     private List<Enemy> enemyList;
@@ -64,6 +65,8 @@ public class Main extends AppCompatActivity {
 
         BitmapLoader.getInstance().load(this);
 
+        FontLoader.getInstance().load(this);
+
         display = new Display(this);
 
         initPlayerObj();
@@ -79,7 +82,7 @@ public class Main extends AppCompatActivity {
     }
 
     private void initEnemyGenerators() {
-        blackAngleGen = new BlackAngelGenerator(player);
+        blackAngelGen = new BlackAngelGenerator(player);
         darkBlobGen = new DarkBlobGenerator(player);
         shadowHandGenerator = new ShadowHandGenerator(player);
     }
@@ -120,8 +123,8 @@ public class Main extends AppCompatActivity {
         }
 
         // Generate enemies
-        blackAngleGen.generate(enemyList, display);
-        darkBlobGen.generate(enemyList, display);
         shadowHandGenerator.generate(enemyList, display);
+        blackAngelGen.generate(enemyList, display);
+        darkBlobGen.generate(enemyList, display);
     }
 }

@@ -11,7 +11,7 @@ import java.util.List;
 
 public class DarkBlob extends Enemy {
 
-    static int speed = 1;
+    static double speed = 4;
 
     public DarkBlob(Player player, double angle, int size, DisplayObj parent) {
         super(speed, player, angle, createActions(), size, parent);
@@ -19,9 +19,27 @@ public class DarkBlob extends Enemy {
 
     @NonNull
     private static List<ActionType> createActions() {
+        final int fireChoice = 0;
+        final int iceChoice = 1;
         return new ArrayList<ActionType>() {{
-            add(ActionType.FIRE);
-            add(ActionType.ICE);
+            for(int i = 0; i < 2; i++){
+                int choice = (int)(Math.random() * 3);
+                if(choice == fireChoice) {
+                    add(ActionType.FIRE);
+                } else if(choice == iceChoice) {
+                    add(ActionType.ICE);
+                } else {
+                    add(ActionType.LIGHTNING);
+                }
+            }
         }};
+    }
+
+    @Override
+    protected void die() {
+        NUM_ENEMIES--;
+        DEAD_ENEMIES++;
+        BLOB_ALIVE = false;
+        dead = true;
     }
 }

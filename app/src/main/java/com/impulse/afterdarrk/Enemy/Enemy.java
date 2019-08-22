@@ -20,15 +20,17 @@ public abstract class Enemy extends DisplayObj {
     private static int INIT_DISTANCE = 1000;
 
     public static int NUM_ENEMIES = 0;
+    public static int DEAD_ENEMIES = 0;
+    public static boolean BLOB_ALIVE = false;
 
     private ActionList actions;
-    private boolean dead;
+    protected boolean dead;
     private final int radius;
-    private int speed;
+    private double speed;
 
     protected Player player;
 
-    public Enemy(int speed, Player player, double angle, List<ActionType> actions, int size,
+    public Enemy(double speed, Player player, double angle, List<ActionType> actions, int size,
                  DisplayObj parent) {
         super(new PolarCoords(INIT_DISTANCE, angle).toCartesian(Main.center), parent);
 
@@ -56,8 +58,9 @@ public abstract class Enemy extends DisplayObj {
         return dead;
     }
 
-    private void die() {
+    protected void die() {
         NUM_ENEMIES--;
+        DEAD_ENEMIES++;
         dead = true;
     }
 
