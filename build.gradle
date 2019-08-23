@@ -1,4 +1,6 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
+apply plugin: 'checkstyle'
+
 
 buildscript {
     
@@ -20,7 +22,50 @@ allprojects {
         google()
         jcenter()
     }
+
+
+    checkstyle {
+        configFile = file("${rootDir}/config/checkstyle/google_checks.xml")
+        ignoreFailures false
+        showViolations true
+        toolVersion = "8.2"
+    }
+
+    task Checkstyle(type: Checkstyle) {
+        configFile = file("${rootDir}/config/checkstyle/google_checks.xml")
+        source 'app/src/main/java/com/impulse/afterdarrk'
+        ignoreFailures false
+        showViolations true
+        include '**/*.java'
+        classpath = files()
+    }
+
+
+// adds checkstyle task to existing check task
+//    afterEvaluate {
+//        if (project.tasks.getByName("check")) {
+//            check.dependsOn('checkstyle')
+//        }
+//    }
+
+
+//    task checkstyle(type: Checkstyle){
+//        configFile = rootProject.file('config/checkstyle/google_checks.xml')
+//
+//        source 'app/src/main/java/com/impulse/afterdarrk'
+//
+//
+//        classpath = files()
+//    }
+
+    task hello {
+        doLast{
+            println 'Hello hi'
+        }
+    }
 }
+
+
 
 task clean(type: Delete) {
     delete rootProject.buildDir

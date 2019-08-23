@@ -1,5 +1,5 @@
 apply plugin: 'com.android.application'
-apply plugin: 'checkstyle'
+
 
 
 android {
@@ -30,44 +30,6 @@ android {
     }
 }
 
-checkstyle {
-    configFile rootProject.file('config/checkstyle/google_checks.xml')
-    ignoreFailures false
-    showViolations true
-    toolVersion = "7.8.1"
-}
-
-task Checkstyle(type: Checkstyle) {
-    configFile rootProject.file('config/checkstyle/google_checks.xml')
-    source 'app/src/main/java'
-    ignoreFailures false
-    showViolations true
-    include '**/*.java'
-    classpath = files()
-}
-
-// adds checkstyle task to existing check task
-afterEvaluate {
-    if (project.tasks.getByName("check")) {
-        check.dependsOn('checkstyle')
-    }
-}
-
-
-//task checkstyle(type: Checkstyle){
-//    configFile = rootProject.file('config/checkstyle/google_checks.xml')
-//
-//    source 'app/src/main/java/com/impulse/afterdarrk'
-//
-//
-//    classpath = files()
-//}
-
-task hello {
-    doLast{
-        println 'Hello hi'
-    }
-}
 
 
 dependencies {
