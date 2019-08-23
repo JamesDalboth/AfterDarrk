@@ -26,6 +26,7 @@ public class ActionBar extends DisplayObj {
 
         createActionButtons(player, width, size);
         createDirectionButtons(player, width, size);
+        createScore(player, width, size);
     }
 
     private void createActionButtons(Player player, int width, CartesianCoords size) {
@@ -45,6 +46,12 @@ public class ActionBar extends DisplayObj {
 
         addObj(leftButton);
         addObj(rightButton);
+    }
+
+    private void createScore(Player player, int width, CartesianCoords size) {
+        Score score = new Score(player, size, new CartesianCoords(width * 5, MARGIN), this);
+
+        addObj(score);
     }
 
     @Override

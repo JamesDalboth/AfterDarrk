@@ -2,17 +2,19 @@ package com.impulse.afterdarrk.Enemy.Generators;
 
 import com.impulse.afterdarrk.Enemy.DarkBlob;
 import com.impulse.afterdarrk.Enemy.Enemy;
+import com.impulse.afterdarrk.LevelRules;
 import com.impulse.afterdarrk.Player;
 
 public class DarkBlobGenerator extends EnemyGenerator {
 
-    public DarkBlobGenerator(Player player) {
+    public DarkBlobGenerator(Player player, LevelRules refGuide) {
         this.player = player;
+        this.refGuide = refGuide;
     }
 
     @Override
     protected double getProb() {
-        return Math.log(enemies_generated + 2) * (5 - Enemy.NUM_ENEMIES) / 5;
+        return refGuide.getBlobProbability(Enemy.DEAD_ENEMIES);
     }
 
     @Override
@@ -24,8 +26,11 @@ public class DarkBlobGenerator extends EnemyGenerator {
         } else{
             angle = Math.random() * (((Math.PI * 133)/64) - (Math.PI * 29)/16) + (Math.PI * 29)/16;
         }
-        Enemy enemy = new DarkBlob(player, angle, size, null);
-        return enemy;
+        if (!Enemy.BLOB_ALIVE) {
+            Enemy.BLOB_ALIVE = true;
+            return new DarkBlob(player, angle, size, null, refGuide);
+        }
+        return null;
     }
 
 }
