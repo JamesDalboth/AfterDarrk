@@ -2,21 +2,19 @@ package com.impulse.afterdarrk.Enemy.Generators;
 
 import com.impulse.afterdarrk.Enemy.BlackAngel;
 import com.impulse.afterdarrk.Enemy.Enemy;
+import com.impulse.afterdarrk.LevelRules;
 import com.impulse.afterdarrk.Player;
 
 public class BlackAngelGenerator extends EnemyGenerator {
 
-    public BlackAngelGenerator(Player player) {
+    public BlackAngelGenerator(Player player, LevelRules refGuide) {
         this.player = player;
+        this.refGuide = refGuide;
     }
 
     @Override
     protected double getProb() {
-        double boost = 1;
-        if(Enemy.DEAD_ENEMIES != 0){
-            boost = Enemy.DEAD_ENEMIES;
-        }
-        return (0.000001/((double)(Enemy.NUM_ENEMIES)))*boost;
+        return refGuide.getAngelProbability(Enemy.DEAD_ENEMIES);
     }
 
     @Override
@@ -28,6 +26,6 @@ public class BlackAngelGenerator extends EnemyGenerator {
         } else{
             angle = Math.random() * (((Math.PI * 133)/64) - (Math.PI * 29)/16) + (Math.PI * 29)/16;
         }
-        return new BlackAngel(player, angle, size, null);
+        return new BlackAngel(player, angle, size, null, refGuide);
     }
 }

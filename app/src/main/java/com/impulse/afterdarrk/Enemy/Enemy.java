@@ -9,6 +9,7 @@ import android.view.View;
 import com.impulse.afterdarrk.Actions.ActionList;
 import com.impulse.afterdarrk.Actions.ActionType;
 import com.impulse.afterdarrk.Display.DisplayObj;
+import com.impulse.afterdarrk.LevelRules;
 import com.impulse.afterdarrk.Main;
 import com.impulse.afterdarrk.Player;
 import com.impulse.afterdarrk.Utils.CartesianCoords;

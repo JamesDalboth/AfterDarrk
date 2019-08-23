@@ -2,21 +2,19 @@ package com.impulse.afterdarrk.Enemy.Generators;
 
 import com.impulse.afterdarrk.Enemy.Enemy;
 import com.impulse.afterdarrk.Enemy.ShadowHand;
+import com.impulse.afterdarrk.LevelRules;
 import com.impulse.afterdarrk.Player;
 
 public class ShadowHandGenerator extends EnemyGenerator {
 
-    public ShadowHandGenerator(Player player) {
+    public ShadowHandGenerator(Player player, LevelRules refGuide) {
         this.player = player;
+        this.refGuide = refGuide;
     }
 
     @Override
     protected double getProb() {
-        double boost = 1;
-        if (Enemy.DEAD_ENEMIES != 0) {
-            boost = Enemy.DEAD_ENEMIES;
-        }
-        return (0.0001 / ((double)(Enemy.NUM_ENEMIES))) * boost;
+        return refGuide.getShadowProbability();
     }
 
     @Override
@@ -28,6 +26,6 @@ public class ShadowHandGenerator extends EnemyGenerator {
         } else{
             angle = Math.random() * (((Math.PI * 133)/64) - (Math.PI * 29)/16) + (Math.PI * 29)/16;
         }
-        return new ShadowHand(player, angle, size, null);
+        return new ShadowHand(player, angle, size, null, refGuide);
     }
 }

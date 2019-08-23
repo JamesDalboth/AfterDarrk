@@ -32,6 +32,8 @@ public class Main extends AppCompatActivity {
     private ShadowHandGenerator shadowHandGenerator;
     private List<Enemy> enemyList;
 
+    private LevelRules refGuide;
+
     private Player player;
 
     // Display object
@@ -69,6 +71,8 @@ public class Main extends AppCompatActivity {
 
         display = new Display(this);
 
+        refGuide = new LevelRules();
+
         initPlayerObj();
         initButtons();
         initEnemyGenerators();
@@ -82,9 +86,9 @@ public class Main extends AppCompatActivity {
     }
 
     private void initEnemyGenerators() {
-        blackAngelGen = new BlackAngelGenerator(player);
-        darkBlobGen = new DarkBlobGenerator(player);
-        shadowHandGenerator = new ShadowHandGenerator(player);
+        blackAngelGen = new BlackAngelGenerator(player, refGuide);
+        darkBlobGen = new DarkBlobGenerator(player, refGuide);
+        shadowHandGenerator = new ShadowHandGenerator(player, refGuide);
     }
 
     private void initPlayerObj() {
